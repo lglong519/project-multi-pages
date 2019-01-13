@@ -3,6 +3,9 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
+import "normalize.css/normalize.css";
+import "./styles/common.scss";
+import "font-awesome/css/font-awesome.min.css";
 
 Vue.config.productionTip = false;
 

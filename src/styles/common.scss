@@ -1,0 +1,62 @@
+body{
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+	color: #333;
+	background-color: #F4F4F4;
+}
+a {
+	text-decoration: none;
+	color: #333;
+	font-size: .8rem;
+}
+
+.app-header{
+	%common{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		height: 2.3rem;
+	}
+	background-color: #fff;
+	header{
+		@extend %common;
+		background-color: #1ABC9C;
+		color: #fff;
+		a{
+			color: #fff;
+			font-size: 1rem;
+		}
+		.right{
+			font-size: 1rem;
+			cursor: pointer;
+		}
+		.icon{
+			flex-basis: 2.5rem;
+			text-align: center;
+		}
+	}
+	nav{
+		@extend %common;
+		border: 1px solid #ccc;
+		a{
+			flex: 1;
+			text-align: center;
+			&:hover{
+				color: #e4393c;
+			}
+		}
+	}
+}
+.app-footer{
+	text-align: center;
+	padding: 1rem 0;
+	a{
+		margin: 0 .5rem;
+		&:hover{
+			color: #e4393c;
+		}
+	}
+}
