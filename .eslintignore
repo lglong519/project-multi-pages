@@ -1,2 +1,3 @@
 dist
 tsc
+public/index.html

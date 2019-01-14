@@ -11,8 +11,20 @@ module.exports = {
       template: "public/index.html", // optional.use default if undefined
     },
     {
+      entry: "@/classify/main.ts",
+      path: "classify",
+    },
+    {
+      entry: "@/ranking-list/main.ts",
+      path: "ranking-list",
+    },
+    {
+      entry: "@/completed/main.ts",
+      path: "completed",
+    },
+    {
       entry: "@/details/main.ts",
-      path: "user/login",
+      path: "details",
     },
   ],
 };

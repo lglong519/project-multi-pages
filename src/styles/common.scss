@@ -11,13 +11,19 @@ a {
 	color: #333;
 	font-size: .8rem;
 }
-
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+h3,p{
+	margin: 0;
+}
 .app-header{
 	%common{
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		width: 100%;
 		height: 2.3rem;
 	}
 	background-color: #fff;
@@ -38,9 +44,49 @@ a {
 			text-align: center;
 		}
 	}
+	.search{
+		height: 2.3rem;
+		transition: height .2s;
+		text-align: center;
+		font-size: 0;
+		overflow: hidden;
+		button{
+			padding: 0;
+			margin-top: .5rem;
+			background: #fff;
+			height: 1.5rem;
+			line-height:calc(1.5rem - 2px);
+			width: 15%;
+			border: 1px solid #ccc;
+			font-size: .8rem;
+			color: #666;
+			cursor: pointer;
+			box-sizing: border-box;
+			vertical-align: bottom;
+		}
+		.search-btn{
+			background-color: #1ABC9C;
+			border-color: #1ABC9C;
+			color: #fff;
+		}
+		input{
+			height: 1.5rem;
+			line-height:1.5rem;
+			width: 50%;
+			padding: 0;
+			margin:calc(0.5rem - 1px) 0 0 .6rem;
+			border: 1px solid #ccc;
+			border-right: none;
+			outline:none;
+			text-indent: .5rem;
+			font-size: .8rem;
+			color: #666;
+			box-sizing: border-box;
+		}
+	}
 	nav{
 		@extend %common;
-		border: 1px solid #ccc;
+		border-bottom: 1px solid #ccc;
 		a{
 			flex: 1;
 			text-align: center;
