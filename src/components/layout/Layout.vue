@@ -1,7 +1,9 @@
 <template>
 	<div>
 		<app-header title="MoFunc"/>
-		<app-main/>
+		<app-main>
+			<slot></slot>
+		</app-main>
 		<app-footer/>
 	</div>
 </template>

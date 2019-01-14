@@ -11,10 +11,10 @@
 			<button class="search-btn"><i class="fa fa-search"></i></button>
 		</div>
 		<nav>
-			<router-link to="/">首页</router-link>
-			<router-link to="/classify">分类</router-link>
-			<router-link to="/ranking-list">排行</router-link>
-			<router-link to="/completed">完本</router-link>
+			<a href="index">首页</a>
+			<a href="sort.html">分类</a>
+			<a href="top.html">排行</a>
+			<a href="full.html">完本</a>
 		</nav>
 	</div>
 </template>

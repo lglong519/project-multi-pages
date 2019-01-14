@@ -57,12 +57,7 @@
     }
   },
   "prettier": {
-    "trailingComma": "es5",
-    "cssEnable": [
-      "css",
-      "less",
-      "sass"
-    ]
+    "trailingComma": "es5"
   },
   "browserslist": [
     "> 1%",

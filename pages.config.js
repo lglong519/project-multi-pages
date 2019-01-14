@@ -11,16 +11,16 @@ module.exports = {
       template: "public/index.html", // optional.use default if undefined
     },
     {
-      entry: "@/classify/main.ts",
-      path: "classify",
+      entry: "@/sort/main.ts",
+      path: "sort",
     },
     {
-      entry: "@/ranking-list/main.ts",
-      path: "ranking-list",
+      entry: "@/top/main.ts",
+      path: "top",
     },
     {
-      entry: "@/completed/main.ts",
-      path: "completed",
+      entry: "@/full/main.ts",
+      path: "full",
     },
     {
       entry: "@/details/main.ts",
