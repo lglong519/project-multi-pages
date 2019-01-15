@@ -9,6 +9,6 @@ import singleRouter from "@/utils/singleRouter";
 Vue.config.productionTip = false;
 
 new Vue({
-  router: singleRouter("sections/contents", () => import("./index.vue")),
-  render: h => h(App),
+  router: singleRouter("user/bookshelf", () => import("./index.vue")),
+  render: h => h(App, { props: { title: "我的书架" } }),
 }).$mount("#app");

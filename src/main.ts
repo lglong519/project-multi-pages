@@ -7,9 +7,11 @@ import "normalize.css/normalize.css";
 import "./styles/common.scss";
 import "font-awesome/css/font-awesome.min.css";
 import plugin from "./plugin";
+import checkLogin from "./utils/checkLogin";
 
 Vue.config.productionTip = false;
 
+checkLogin(router);
 Vue.use(plugin);
 
 new Vue({

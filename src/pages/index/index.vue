@@ -6,7 +6,7 @@
 			<ul>
 				<li>
 					<router-link to="/sections.html">
-						<img src="https://www.bi00quke.com/files/article/image/3/3714/3714s.jpg" alt="" :onerror="global.defaultImg">
+						<img src="https://www.biquke.com/files/article/image/3/3714/3714s.jpg" alt="" :onerror="global.defaultImg">
 						<span>123</span>
 					</router-link>
 				</li>

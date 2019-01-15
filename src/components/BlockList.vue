@@ -1,8 +1,10 @@
 <template>
 	<ul class="block">
-		<li v-for="(item,i) of blocks" :key="i"><div>
-			<router-link :to="item.path">{{item.name}}</router-link>
-		</div></li>
+		<li v-for="(item,i) of blocks" :key="i">
+			<div>
+				<router-link :to="item.path">{{item.name}}</router-link>
+			</div>
+		</li>
 	</ul>
 </template>
 <script lang="ts">

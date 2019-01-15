@@ -7,6 +7,9 @@ body {
 	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 	color: $color_font_std;
 	background-color: $color_bg;
+	&::-webkit-scrollbar {
+		display: none;
+	}
 }
 
 a {
@@ -24,6 +27,10 @@ ul {
 h3,
 p {
 	margin: 0;
+}
+
+.clr-red{
+	color: $color_red;
 }
 
 .app-header {
@@ -52,8 +59,13 @@ p {
 		}
 
 		.icon {
-			flex-basis: 2.5rem;
+			flex-basis: 3rem;
 			text-align: center;
+		}
+		.text{
+			flex-basis: 3.5rem;
+			text-align: center;
+			font-size: .8rem;
 		}
 	}
 
@@ -129,14 +141,20 @@ p {
 	}
 }
 
-.app-container {}
-
-.card-list {
+%container{
 	margin: 0.5rem;
 	border: 1px solid $color_border;
 	border-radius: 3px;
 	background-color: #fff;
 	font-size: 0.8rem;
+}
+
+.app-container {
+	@extend %container;
+}
+
+.card-list {
+	@extend %container;
 
 	>.title {
 		@extend %border-bottom;

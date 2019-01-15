@@ -9,6 +9,6 @@ import singleRouter from "@/utils/singleRouter";
 Vue.config.productionTip = false;
 
 new Vue({
-  router: singleRouter("sections/contents", () => import("./index.vue")),
-  render: h => h(App),
+  router: singleRouter("user/signup", () => import("./index.vue")),
+  render: h => h(App, { props: { title: "注册" } }),
 }).$mount("#app");

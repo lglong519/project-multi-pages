@@ -9,9 +9,9 @@
 					</div>
 					<div>
 						<h3>{{item.title}}<span class="views">
-								<slot :data="item"><i>{{item.views}}</i>在看</slot>
+							<slot :data="item"><i>{{item.views}}</i>人在看</slot>
 						</span></h3>
-						<div class="author">作者:{{item.author}}</div>
+						<div class="author">作者: {{item.author}}</div>
 						<p class="summary">{{item.summary}}</p>
 					</div>
 				</li>

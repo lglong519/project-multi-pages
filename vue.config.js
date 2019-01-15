@@ -37,7 +37,7 @@ module.exports = {
   pages,
   chainWebpack: config => config.plugins.delete("named-chunks"),
   productionSourceMap: false,
-  publicPath: "/multi/",
+  //   publicPath: "/multi/",
   devServer: {
     port: 31210,
     https: false,
