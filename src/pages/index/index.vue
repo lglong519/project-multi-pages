@@ -5,19 +5,19 @@
 		<div class="content">
 			<ul>
 				<li>
-					<router-link to="/details">
-						<img src="https://www.biquke.com/files/article/image/3/3714/3714s.jpg" alt="">
+					<router-link to="/sections.html">
+						<img src="https://www.bi00quke.com/files/article/image/3/3714/3714s.jpg" alt="" :onerror="global.defaultImg">
 						<span>123</span>
 					</router-link>
 				</li>
 				<li>
-					<router-link to="/details">
-						<img src="https://www.biquke.com/files/article/image/3/3714/3714s.jpg" alt="">
+					<router-link to="/sections">
+						<img src="https://www.biquke.com/files/article/image/3/3714/3714s.jpg" alt="" :onerror="global.defaultImg">
 						<span>456</span>
 					</router-link>
 				</li>
 				<li>
-					<router-link to="/details">
+					<router-link to="/sections">
 						<img src="https://www.biquke.com/files/article/image/3/3714/3714s.jpg" alt="">
 						<span>789</span>
 					</router-link>
@@ -25,23 +25,7 @@
 			</ul>
 		</div>
 	</div>
-    <div class="hot">
-		<div class="title">热门推荐</div>
-		<div class="content">
-			<ul>
-				<li v-for="(item,i) of fictions" :key="i">
-					<div class="cover">
-						<img :src="item.cover" onerror="this.src='nocover.jpg'">
-					</div>
-					<div>
-						<h3>{{item.title}}<span class="views"><i>{{item.views}}</i> 在看</span></h3>
-						<div class="author">作者:{{item.author}}</div>
-						<p class="summary">{{item.summary}}</p>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</div>
+	<card-list title="热门推荐" :list="fictions"></card-list>
     <div class="recent-update">
 		<div class="title">最近更新</div>
 		<div class="content">
@@ -62,7 +46,13 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-@Component
+import CardList from "@/components/CardList.vue";
+
+@Component({
+  components: {
+    CardList,
+  },
+})
 export default class Home extends Vue {
   fictions: any = [
     {

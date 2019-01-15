@@ -7,6 +7,9 @@ export default {
     Object.entries(api).forEach(item => {
       [, Vue.prototype[item[0]]] = item;
     });
+    Vue.prototype.global = {
+      defaultImg: 'this.src="' + require("@/assets/default.png") + '"',
+    };
   },
 };
 
@@ -16,4 +19,8 @@ Vue.filter("dateTime", (value: any, format = "YYYY-MM-DD HH:mm:SS") => {
     value = Number(value) * 1;
   }
   return moment(value).format(format);
+});
+
+Vue.filter("imgError", (value: any) => {
+  return 'this.src="' + require("../assets/default.png") + '"';
 });

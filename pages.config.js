@@ -6,13 +6,9 @@ module.exports = {
   pagesRoot: "src/pages/", // => @/
   pages: [
     {
-      entry: "@/details/main.ts",
-      path: "details",
-      template: "public/index.html", // optional.use default if undefined
-    },
-    {
       entry: "@/sort/main.ts",
       path: "sort",
+      template: "public/index.html", // optional.use default if undefined
     },
     {
       entry: "@/top/main.ts",
@@ -22,9 +18,27 @@ module.exports = {
       entry: "@/full/main.ts",
       path: "full",
     },
+    // book
     {
-      entry: "@/details/main.ts",
-      path: "details",
+      entry: "@/book/sections/main.ts",
+      path: "book/sections",
+    },
+    {
+      entry: "@/book/sections/contents/main.ts",
+      path: "book/sections/contents",
+    },
+    // user
+    {
+      entry: "@/user/bookshelf/main.ts",
+      path: "user/bookshelf",
+    },
+    {
+      entry: "@/user/signin/main.ts",
+      path: "user/signin",
+    },
+    {
+      entry: "@/user/signup/main.ts",
+      path: "user/signup",
     },
   ],
 };

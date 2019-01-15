@@ -1,15 +1,13 @@
 <template>
 	<div>
-		<app-header title="MoFunc"/>
-		<app-main>
-			<slot></slot>
-		</app-main>
+		<app-header :title="title||'MoFunc'"></app-header>
+		<app-main/>
 		<app-footer/>
 	</div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import { AppHeader, AppMain, AppFooter } from "./components";
 
 @Component({
@@ -19,5 +17,7 @@ import { AppHeader, AppMain, AppFooter } from "./components";
     AppFooter,
   },
 })
-export default class Layout extends Vue {}
+export default class Layout extends Vue {
+  @Prop() private title!: string;
+}
 </script>

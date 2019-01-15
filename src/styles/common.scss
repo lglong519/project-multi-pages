@@ -1,5 +1,6 @@
 @import "./variables.scss";
-body{
+
+body {
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
@@ -7,56 +8,68 @@ body{
 	color: $color_font_std;
 	background-color: $color_bg;
 }
+
 a {
 	text-decoration: none;
 	color: $color_font_std;
 	font-size: .8rem;
 }
+
 ul {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
-h3,p{
+
+h3,
+p {
 	margin: 0;
 }
-.app-header{
-	%common{
+
+.app-header {
+	%common {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		height: 2.3rem;
 	}
+
 	background-color: #fff;
-	header{
+
+	header {
 		@extend %common;
 		background-color: $color_cyan;
 		color: #fff;
-		a{
+
+		a {
 			color: #fff;
 			font-size: 1rem;
 		}
-		.right{
+
+		.right {
 			font-size: 1rem;
 			cursor: pointer;
 		}
-		.icon{
+
+		.icon {
 			flex-basis: 2.5rem;
 			text-align: center;
 		}
 	}
-	.search{
+
+	.search {
 		height: 2.3rem;
 		transition: height .2s;
 		text-align: center;
 		font-size: 0;
 		overflow: hidden;
-		button{
+
+		button {
 			padding: 0;
 			margin-top: .5rem;
 			background: #fff;
 			height: 1.5rem;
-			line-height:calc(1.5rem - 2px);
+			line-height: calc(1.5rem - 2px);
 			width: 15%;
 			border: 1px solid #ccc;
 			font-size: .8rem;
@@ -65,45 +78,131 @@ h3,p{
 			box-sizing: border-box;
 			vertical-align: bottom;
 		}
-		.search-btn{
+
+		.search-btn {
 			background-color: $color_cyan;
 			border-color: $color_cyan;
 			color: #fff;
 		}
-		input{
+
+		input {
 			height: 1.5rem;
-			line-height:1.5rem;
+			line-height: 1.5rem;
 			width: 50%;
 			padding: 0;
-			margin:calc(0.5rem - 1px) 0 0 .6rem;
+			margin: calc(0.5rem - 1px) 0 0 .6rem;
 			border: 1px solid #ccc;
 			border-right: none;
-			outline:none;
+			outline: none;
 			text-indent: .5rem;
 			font-size: .8rem;
 			color: $color_font_mid;
 			box-sizing: border-box;
 		}
 	}
-	nav{
+
+	nav {
 		@extend %common;
 		border-bottom: 1px solid #ccc;
-		a{
+
+		a {
 			flex: 1;
 			text-align: center;
-			&:hover{
+
+			&:hover {
 				color: $color_red;
 			}
 		}
 	}
 }
-.app-footer{
+
+.app-footer {
 	text-align: center;
 	padding: 1rem 0;
-	a{
+
+	a {
 		margin: 0 .5rem;
-		&:hover{
+
+		&:hover {
 			color: $color_red;
 		}
+	}
+}
+
+.app-container {}
+
+.card-list {
+	margin: 0.5rem;
+	border: 1px solid $color_border;
+	border-radius: 3px;
+	background-color: #fff;
+	font-size: 0.8rem;
+
+	>.title {
+		@extend %border-bottom;
+		padding: 0.5rem 0.6rem .25rem;
+		color: $color_font_mid;
+	}
+
+	.content {
+		padding: 0.5rem;
+
+		li {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: nowrap;
+			padding: .3rem 0;
+			border-bottom: 1px dotted $color_border_light;
+
+			h3 {
+				font-weight: normal;
+				line-height: 1.2rem;
+			}
+
+			.cover {
+				width: 2.5rem;
+
+				img {
+					width: 100%;
+				}
+			}
+
+			.views {
+				float: right;
+				font-weight: normal;
+
+				i {
+					color: $color_org;
+				}
+			}
+
+			>div:last-child {
+				flex: 1;
+				padding-left: .5rem;
+				overflow: hidden;
+
+				.author {
+					margin: .2rem 0;
+				}
+			}
+
+			.author,
+			.summary,
+			.views {
+				color: $color_font_light;
+				font-size: .7rem;
+			}
+
+			.summary {
+				width: 100%;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				word-break: break-all;
+				line-height: 1.5;
+			}
+		}
+
 	}
 }

@@ -7,3 +7,6 @@ $color_bg:#F4F4F4;
 $color_font_std:#333;
 $color_font_mid:#666;
 $color_font_light:#999;
+%border-bottom{
+	border-bottom: 1px solid $color_border;
+}

@@ -1,6 +1,6 @@
 <template>
 	<div class="app-footer">
-		<router-link to="/index">首页</router-link>
+		<a href="index">首页</a>
 		<router-link to="/user/bookshelf">书架</router-link>
 	</div>
 </template>

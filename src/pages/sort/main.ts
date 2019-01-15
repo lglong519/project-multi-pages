@@ -4,11 +4,11 @@ import "@/registerServiceWorker";
 import "normalize.css/normalize.css";
 import "@/styles/common.scss";
 import "font-awesome/css/font-awesome.min.css";
-import router from "./router";
+import singleRouter from "@/utils/singleRouter";
 
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
-  render: h => h(App),
+  router: singleRouter("sort", () => import("./index.vue")),
+  render: h => h(App, { props: { title: "小说分类" } }),
 }).$mount("#app");

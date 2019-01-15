@@ -4,11 +4,11 @@ import "@/registerServiceWorker";
 import "normalize.css/normalize.css";
 import "@/styles/common.scss";
 import "font-awesome/css/font-awesome.min.css";
-import router from "./router";
+import singleRouter from "@/utils/singleRouter";
 
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
+  router: singleRouter("book/sections", () => import("./index.vue")),
   render: h => h(App),
 }).$mount("#app");
