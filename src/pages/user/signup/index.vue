@@ -15,7 +15,7 @@
 			</div>
 			<div class="row btns">
 				<button type="button" @click="corfirm">确定注册</button>
-				<button type="button" @click="signin">登录帐号?</button>
+				<button type="button" @click="signin">帐号登录?</button>
 			</div>
 		</form>
 	</div>

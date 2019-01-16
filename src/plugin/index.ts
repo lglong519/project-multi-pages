@@ -29,3 +29,27 @@ Vue.filter("dateTime", (value: any, format = "YYYY-MM-DD HH:mm:SS") => {
 Vue.filter("imgError", (value: any) => {
   return 'this.src="' + require("../assets/default.png") + '"';
 });
+
+// directive
+Vue.directive("book", {
+  bind: function(el: any, binding: any) {
+    el.onclick = function() {
+      if (!/\w+/i.test(binding.value)) {
+        return alert("INVALID_BOOK");
+      }
+      location.href = "/book/sections.html?bid=" + binding.value;
+    };
+    el.style.cursor = "pointer";
+  },
+});
+Vue.directive("section", {
+  bind: function(el: any, binding: any) {
+    el.onclick = function() {
+      if (!/\w+/i.test(binding.value)) {
+        return alert("INVALID_SECTION");
+      }
+      location.href = "/book/sections/contents.html?sid=" + binding.value;
+    };
+    el.style.cursor = "pointer";
+  },
+});

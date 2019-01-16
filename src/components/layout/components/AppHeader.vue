@@ -30,7 +30,7 @@
 				<span class="text left" onclick="history.go(-1)">
 					<a href="javascript:void(0)" class="btn">返回</a>
 				</span>
-				<span>{{title}}</span>
+				<span class="title">{{title}}</span>
 				<span class="text right">
 					<a href="/index" class="btn">首页</a>
 				</span>
@@ -42,11 +42,11 @@
 			</template>
 		</header>
 		<div class="search" :style="searchVisible?'height: 2.3rem;':'height: 0;'">
-			<button>书名</button>
+			<button @click="switchSearchType">{{searchType}}</button>
 			<input type="text" name="searchValue" placeholder="输入搜索词"/>
 			<button class="search-btn"><i class="fa fa-search"></i></button>
 		</div>
-		<nav v-if="headerType!=='sections'&&headerType!=='contents'">
+		<nav v-if="showNav">
 			<a href="/index">首页</a>
 			<a href="/sort.html">分类</a>
 			<a href="/top.html">排行</a>
@@ -61,11 +61,9 @@ import { Component, Vue, Inject } from "vue-property-decorator";
 export default class AppHeader extends Vue {
   @Inject("title") title!: string;
   private type: string = "index";
+  private searchType: string = "书名";
   searchVisible: boolean = false;
   get headerType() {
-    if (this.$route.path.includes("contents")) {
-      return "contents";
-    }
     if (this.$route.path.includes("sections")) {
       return "sections";
     }
@@ -79,6 +77,15 @@ export default class AppHeader extends Vue {
       return "main";
     }
     return "index";
+  }
+  get showNav() {
+    if (/sections|contents/.test(this.$route.path)) {
+      return false;
+    }
+    return true;
+  }
+  switchSearchType() {
+    this.searchType = "作者书名".replace(this.searchType, "");
   }
   logout() {
     localStorage.removeItem("accessToken");

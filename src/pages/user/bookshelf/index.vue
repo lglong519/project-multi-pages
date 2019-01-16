@@ -4,9 +4,9 @@
 			<div>还木有任何书籍( ˙﹏˙ )</div>
 		</div>
 		<div v-else class="book-list" v-for="(item,i) of bookList" :key="i">
-			<div>书名: <a href="/book/sections.html">{{item.title}}</a></div>
-			<div>最新: <a href="/book/sections/contents.html">{{item.lastSection}}</a></div>
-			<div>书签: <a v-if="item.mark" href="/book/sections/contents.html">{{item.mark}}</a>
+			<div>书名: <a v-book="item.id">{{item.title}}</a></div>
+			<div>最新: <a v-section="123">{{item.lastSection}}</a></div>
+			<div>书签: <a v-if="item.mark" v-section="123">{{item.mark}}</a>
 			<span v-else>无书签</span>
 			</div>
 			<div class="clr-red" @click="remove(item,i)">删除本书</div>
@@ -92,7 +92,10 @@ export default class Bookshelf extends Vue {
   ];
   remove(item: any, index: number) {
     if (item && item.id) {
-      this.bookList.splice(index, 1);
+      let r = confirm(`确定要删除 ${item.title}?`);
+      if (r == true) {
+        this.bookList.splice(index, 1);
+      }
     }
   }
 }

@@ -5,22 +5,25 @@
 		<div class="content">
 			<ul>
 				<li>
-					<router-link to="/sections.html">
-						<img src="https://www.biquke.com/files/article/image/3/3714/3714s.jpg" alt="" :onerror="global.defaultImg">
-						<span>123</span>
-					</router-link>
+					<a v-book="123">
+						<div class="img" :style="'background-image:url('+'https://m.biquke.com/files/article/image/22/22572/22572s.jpg'+')'">
+						</div>
+						<span>无行天</span>
+					</a>
 				</li>
 				<li>
-					<router-link to="/sections">
-						<img src="https://www.biquke.com/files/article/image/3/3714/3714s.jpg" alt="" :onerror="global.defaultImg">
-						<span>456</span>
-					</router-link>
+					<a v-book="123">
+						<div class="img" :style="'background-image:url('+'https://www.biquke.com/files/article/image/34/34900/34900s.jpg'+')'">
+						</div>
+						<span>圣墟</span>
+					</a>
 				</li>
 				<li>
-					<router-link to="/sections">
-						<img src="https://www.biquke.com/files/article/image/3/3714/3714s.jpg" alt="">
-						<span>789</span>
-					</router-link>
+					<a v-book="123">
+						<div class="img" :style="'background-image:url('+'https://www.biquke.com/files/article/image/3/3714/3714s.jpg'+')'">
+						</div>
+						<span>飞剑问道</span>
+					</a>
 				</li>
 			</ul>
 		</div>
@@ -31,7 +34,7 @@
 		<div class="content">
 			<ul>
 				<li v-for="(item,i) of fictions" :key="i">
-					<div>
+					<div v-book="123">
 						{{i+1}}.<span class="title">{{item.title}}</span> - 
 						<span class="author">{{item.author}}</span>
 						<span class="createdAt"><i>{{item.createdAt | dateTime("MM-DD HH:mm")}}</i></span>

@@ -33,9 +33,17 @@ p {
 	color: $color_red;
 }
 
+%nowrap{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-break: break-all;
+}
+
 .app-header {
 	%common {
 		display: flex;
+		flex-wrap: nowrap;
 		justify-content: space-between;
 		align-items: center;
 		height: 2.3rem;
@@ -58,8 +66,9 @@ p {
 			cursor: pointer;
 		}
 
-		.icon {
+		.icon,.text {
 			flex-basis: 3rem;
+			flex-shrink: 0;
 			text-align: center;
 		}
 		.text,.text>a{
@@ -71,6 +80,9 @@ p {
 				border-radius: .1rem;
 				background: $color_cyan_light;
 			}
+		}
+		.title{
+			@extend %nowrap
 		}
 	}
 
@@ -218,11 +230,8 @@ p {
 			}
 
 			.summary {
+				@extend %nowrap;
 				width: 100%;
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				word-break: break-all;
 				line-height: 1.5;
 			}
 		}

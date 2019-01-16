@@ -21,11 +21,15 @@
             display: flex;
             justify-content: space-between;
             li {
-                flex-basis: 32%;
-                text-align: center;
-                img {
-                    width: 100%;
-                }
+				flex-basis: 31%;
+				text-align: center;
+				.img{
+					height: 0;
+					margin-bottom:.5rem; 
+					padding-bottom: 130%;
+					background-repeat: no-repeat;
+					background-size: cover;
+				}
             }
         }
 	}

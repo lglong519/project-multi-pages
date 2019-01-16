@@ -20,10 +20,10 @@ import { AppHeader, AppMain, AppFooter } from "./components";
 })
 export default class Layout extends Vue {
   @Prop() private title!: string;
-  @Inject("title") __title!: string;
+  //   @Inject("title") __title!: string;
   @Provide("title")
   get _title() {
-    return this.title || this.__title || "MoFunc";
+    return this.title || "MoFunc";
   }
 }
 </script>

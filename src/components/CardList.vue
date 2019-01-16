@@ -3,7 +3,7 @@
 		<div class="title">{{title}}</div>
 		<div class="content">
 			<ul>
-				<li v-for="(item,i) of list" :key="i">
+				<li v-for="(item,i) of list" :key="i" v-book="123">
 					<div class="cover">
 						<img :src="item.cover" :onerror="global.defaultImg">
 					</div>

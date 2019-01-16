@@ -1,6 +1,6 @@
 <template>
-	<div id="app">
-		<layout>
+	<div id="app" v-if="vshow">
+		<layout :title="title">
 			<div class="app-main">
 				<div class="book">
 					<div class="cover">
@@ -16,8 +16,8 @@
 					</div>
 				</div>
 				<div class="btn-group">
-					<button type="button" @click="corfirm">开始阅读</button>
-					<button type="button" @click="signup">加入书架</button>
+					<button type="button" v-section="0">开始阅读</button>
+					<button type="button" @click="addToBookshelf">加入书架</button>
 				</div>
 				<div class="tab">
 					{{book.title}}小说简介
@@ -29,13 +29,13 @@
 					{{book.title}}最新章节 更新时间: {{book.updateDate | dateTime}}
 				</div>
 				<ul class="sections">
-					<li v-for="(item,i) of sections" :key="i">{{item.title}}</li>
+					<li v-for="(item,i) of sections" :key="i" v-section="item.id">{{item.title}}</li>
 				</ul>
 				<div class="tab">
 					全部章节列表
 				</div>
 				<ul class="sections">
-					<li v-for="(item,i) of sections" :key="i">{{item.title}}</li>
+					<li v-for="(item,i) of sections" :key="i" v-section="item.sid">{{item.title}}</li>
 				</ul>
 			</div>
 		</layout>
@@ -128,7 +128,7 @@ button {
   padding-bottom: 0.5rem;
   li {
     padding-left: 0.7rem;
-    line-height: 2.2;
+    line-height: 2;
     border-bottom: 0.05rem solid $color_border_light;
   }
 }
@@ -144,9 +144,10 @@ import Layout from "@/components/layout/Layout.vue";
   },
 })
 export default class Sections extends Vue {
+  vshow: boolean = false;
   book: any = {
-    id: 9377,
-    cover: "https://www.biquke.com/files/article/image/27/27317/27317s.jpg",
+    bid: 9377,
+    cover: "https://www.biquke.com/files/article/image/3/3714/3714s.jpg",
     title: "飞剑问道",
     author: "番茄",
     views: 4399,
@@ -159,40 +160,56 @@ export default class Sections extends Vue {
     sort: "修真小说",
     createdAt: new Date(),
     summary:
-      "今天爱就爱叫佛法缴费机安检哦啊哦安静挂机挂机爱啦啦去哦去哦俺姥阿帕奇安静挂机挂机爱啦啦去哦去哦哦贴哦安排在苹果奥法哦哦去领取",
+      "在这个世界，有狐仙、河神、水怪、大妖，也有求长生的修行者。 修行者们， 开法眼，可看妖魔鬼怪。 炼一口飞剑，可千里杀敌。 千里眼、顺风耳，更可探查四方。 …… 秦府二公子‘秦云’，便是一位修行者……",
   };
   sections: any = [
     {
-      book: 9377,
+      id: 123,
+      bid: 9377,
       title: "第1章",
     },
     {
-      book: 9377,
+      id: 123,
+      bid: 9377,
       title: "第2章",
     },
     {
-      book: 9377,
+      id: 123,
+      bid: 9377,
       title: "第3章",
     },
     {
-      book: 9377,
+      id: 123,
+      bid: 9377,
       title: "第4章",
     },
     {
-      book: 9377,
+      id: 123,
+      bid: 9377,
       title: "第5章",
     },
     {
-      book: 9377,
+      id: 123,
+      bid: 9377,
       title: "第6章",
     },
   ];
-  @Provide("title")
   get title() {
     return `${this.book.title} 目录(共${this.book.sections}章)`;
   }
+  beforeCreate() {
+    if (!/bid=\w+/i.test(location.href)) {
+      return location.replace("/404?url=" + location.href);
+    }
+  }
   created() {
     this.$route.path = "sections";
+    if (/bid=\w+/i.test(location.href)) {
+      this.vshow = true;
+    }
+  }
+  addToBookshelf() {
+    alert("已加入書架");
   }
 }
 </script>
