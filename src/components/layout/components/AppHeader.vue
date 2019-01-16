@@ -26,6 +26,15 @@
 					注销
 				</span>
 			</template>
+			<template v-if="headerType=='sections'||headerType=='404'">
+				<span class="text left" onclick="history.go(-1)">
+					<a href="javascript:void(0)" class="btn">返回</a>
+				</span>
+				<span>{{title}}</span>
+				<span class="text right">
+					<a href="/index" class="btn">首页</a>
+				</span>
+			</template>
 			<template v-if="$slots.title">
 				<span></span>
 				<slot name="title"></slot>
@@ -37,7 +46,7 @@
 			<input type="text" name="searchValue" placeholder="输入搜索词"/>
 			<button class="search-btn"><i class="fa fa-search"></i></button>
 		</div>
-		<nav>
+		<nav v-if="headerType!=='sections'&&headerType!=='contents'">
 			<a href="/index">首页</a>
 			<a href="/sort.html">分类</a>
 			<a href="/top.html">排行</a>
@@ -47,10 +56,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Inject } from "vue-property-decorator";
 @Component
-export default class extends Vue {
-  @Prop() private title!: string;
+export default class AppHeader extends Vue {
+  @Inject("title") title!: string;
   private type: string = "index";
   searchVisible: boolean = false;
   get headerType() {
@@ -62,6 +71,9 @@ export default class extends Vue {
     }
     if (this.$route.path.includes("bookshelf")) {
       return "bookshelf";
+    }
+    if (this.$route.path.startsWith("/404")) {
+      return "404";
     }
     if (this.$route.path.includes(".html")) {
       return "main";

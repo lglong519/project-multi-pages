@@ -10,6 +10,11 @@ export default {
     Vue.prototype.global = {
       defaultImg: 'this.src="' + require("@/assets/default.png") + '"',
     };
+    if (!("$route" in Vue.prototype)) {
+      Vue.prototype["$route"] = {
+        path: "",
+      };
+    }
   },
 };
 

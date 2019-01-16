@@ -9,7 +9,7 @@ import BlockList from "@/components/BlockList.vue";
     BlockList,
   },
 })
-export default class Home extends Vue {
+export default class Top extends Vue {
   blocks: any = [
     {
       name: "日点击榜",

@@ -1,9 +1,7 @@
 <template>
-  <div class="app-container">
 	<card-list title="完本小说" :list="fictions">
 			<i slot-scope="{ data }">{{data.updatedAt | dateTime("YYYY-MM-DD")}}完本</i>
 	</card-list>
-  </div>
 </template>
 
 <script lang="ts">
@@ -15,7 +13,7 @@ import CardList from "@/components/CardList.vue";
     CardList,
   },
 })
-export default class Home extends Vue {
+export default class Full extends Vue {
   fictions: any = [
     {
       cover: "https://www.biquke.com/files/article/image/27/27317/27317s.jpg",

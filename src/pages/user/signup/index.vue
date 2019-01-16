@@ -41,6 +41,7 @@
     outline: none;
     text-indent: 0.5rem;
     color: $color_font_mid;
+    border-radius: 0.2rem;
   }
   .btns {
     justify-content: space-around;
@@ -60,7 +61,7 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 
 @Component
-export default class Home extends Vue {
+export default class Signup extends Vue {
   formData: any = {
     username: "",
     password: "",

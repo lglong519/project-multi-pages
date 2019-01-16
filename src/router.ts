@@ -27,5 +27,17 @@ export default new Router({
         },
       ],
     },
+    {
+      path: "/404",
+      name: "404",
+      component: Layout,
+      children: [
+        {
+          path: "",
+          component: () => import("./pages/index/404.vue"),
+        },
+      ],
+    },
+    { path: "*", redirect: "/404" },
   ],
 });

@@ -4,9 +4,9 @@
 			<div>还木有任何书籍( ˙﹏˙ )</div>
 		</div>
 		<div v-else class="book-list" v-for="(item,i) of bookList" :key="i">
-			<div>书名: <a>{{item.title}}</a></div>
-			<div>最新: <a>{{item.lastSection}}</a></div>
-			<div>书签: <a v-if="item.mark">{{item.mark}}</a>
+			<div>书名: <a href="/book/sections.html">{{item.title}}</a></div>
+			<div>最新: <a href="/book/sections/contents.html">{{item.lastSection}}</a></div>
+			<div>书签: <a v-if="item.mark" href="/book/sections/contents.html">{{item.mark}}</a>
 			<span v-else>无书签</span>
 			</div>
 			<div class="clr-red" @click="remove(item,i)">删除本书</div>
@@ -24,7 +24,7 @@
   .book-list {
     border-bottom: 0.05rem solid $color_green;
     > div {
-      margin: 0.4rem 0;
+      margin: 0.55rem 0;
     }
   }
   .empty {
@@ -43,7 +43,7 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
-export default class Home extends Vue {
+export default class Bookshelf extends Vue {
   bookList: any = [
     {
       id: 9377,

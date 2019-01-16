@@ -1,13 +1,14 @@
 <template>
 	<div>
-		<app-header :title="title||'MoFunc'"></app-header>
+		<app-header/>
 		<app-main/>
+		<slot></slot>
 		<app-footer/>
 	</div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Provide, Prop, Inject } from "vue-property-decorator";
 import { AppHeader, AppMain, AppFooter } from "./components";
 
 @Component({
@@ -19,5 +20,10 @@ import { AppHeader, AppMain, AppFooter } from "./components";
 })
 export default class Layout extends Vue {
   @Prop() private title!: string;
+  @Inject("title") __title!: string;
+  @Provide("title")
+  get _title() {
+    return this.title || this.__title || "MoFunc";
+  }
 }
 </script>

@@ -48,6 +48,7 @@
     border: none;
     color: #fff;
     background-color: $color_cyan;
+    border-radius: 0.2rem;
   }
 }
 </style>
@@ -56,7 +57,7 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
-export default class Home extends Vue {
+export default class Signin extends Vue {
   formData: any = {
     username: "",
     password: "",
