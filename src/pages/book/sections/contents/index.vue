@@ -154,9 +154,6 @@ export default class Sections extends Vue {
       this.vshow = true;
     }
   }
-  bookmark() {
-    alert("加入书签成功！");
-  }
   setFontSize(size: string) {
     if (typeof size == "string" && size) {
       this.fontSize = size;
@@ -166,6 +163,15 @@ export default class Sections extends Vue {
   toggleLight() {
     this.light = "onoff".replace(this.light, "");
     localStorage.setItem("light", this.light);
+  }
+  bookmark() {
+    if (localStorage.getItem("accessToken")) {
+      return alert("加入书签成功！");
+    }
+    if (confirm(`未登录，是否前往登录?`)) {
+      localStorage.removeItem("accessToken");
+      location.href = "/user/signin.html";
+    }
   }
 }
 </script>

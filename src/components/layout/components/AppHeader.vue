@@ -88,9 +88,11 @@ export default class AppHeader extends Vue {
     this.searchType = "作者书名".replace(this.searchType, "");
   }
   logout() {
-    localStorage.removeItem("accessToken");
-    location.replace("/index");
-    window.history.forward();
+    if (confirm(`确定要退出登录?`)) {
+      localStorage.removeItem("accessToken");
+      location.replace("/index");
+      window.history.forward();
+    }
   }
 }
 </script>

@@ -74,9 +74,17 @@ export default class Signup extends Vue {
   corfirm() {
     localStorage.setItem("accessToken", "9527");
     localStorage.removeItem("signup");
+    let redirect = location.href.match(/redirect=(.*)+/);
+    if (redirect) {
+      return (location.href = decodeURIComponent(redirect[1]));
+    }
     location.href = "/user/bookshelf.html";
   }
   signin() {
+    let redirect = location.href.match(/redirect=(.*)+/);
+    if (redirect) {
+      return (location.href = "/user/signin.html?redirect=" + redirect[1]);
+    }
     location.href = "/user/signin.html";
   }
   created() {

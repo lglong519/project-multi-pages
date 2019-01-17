@@ -42,7 +42,6 @@
 	</div>
 </template>
 
-
 <style lang="scss" scoped>
 @import "../../../styles/variables.scss";
 
@@ -209,7 +208,13 @@ export default class Sections extends Vue {
     }
   }
   addToBookshelf() {
-    alert("已加入書架");
+    if (localStorage.getItem("accessToken")) {
+      return alert("加入书架成功！");
+    }
+    if (confirm(`未登录，是否前往登录?`)) {
+      localStorage.removeItem("accessToken");
+      location.href = "/user/signin.html?redirect=" + location.href;
+    }
   }
 }
 </script>

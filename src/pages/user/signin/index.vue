@@ -64,9 +64,17 @@ export default class Signin extends Vue {
   };
   corfirm() {
     localStorage.setItem("accessToken", "9527");
+    let redirect = location.href.match(/redirect=(.*)+/);
+    if (redirect) {
+      return (location.href = decodeURIComponent(redirect[1]));
+    }
     location.href = "/user/bookshelf.html";
   }
   signup() {
+    let redirect = location.href.match(/redirect=(.*)+/);
+    if (redirect) {
+      return (location.href = "/user/signup.html?redirect=" + redirect[1]);
+    }
     location.href = "/user/signup.html";
   }
 }

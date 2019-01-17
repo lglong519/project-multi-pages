@@ -92,10 +92,7 @@ export default class Bookshelf extends Vue {
   ];
   remove(item: any, index: number) {
     if (item && item.id) {
-      let r = confirm(`确定要删除 ${item.title}?`);
-      if (r == true) {
-        this.bookList.splice(index, 1);
-      }
+      confirm(`确定要删除 ${item.title}?`) && this.bookList.splice(index, 1);
     }
   }
 }
