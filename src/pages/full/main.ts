@@ -6,9 +6,11 @@ import "@/styles/common.scss";
 import "font-awesome/css/font-awesome.min.css";
 import singleRouter from "@/utils/singleRouter";
 import plugin from "@/plugin/index";
+import VueLazyload from "vue-lazyload";
 
 Vue.config.productionTip = false;
 
+Vue.use(VueLazyload);
 Vue.use(plugin);
 new Vue({
   router: singleRouter("full", () => import("./index.vue")),

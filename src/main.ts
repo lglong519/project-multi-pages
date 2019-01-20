@@ -8,11 +8,13 @@ import "./styles/common.scss";
 import "font-awesome/css/font-awesome.min.css";
 import plugin from "./plugin";
 import checkLogin from "./utils/checkLogin";
+import VueLazyload from "vue-lazyload";
 
 Vue.config.productionTip = false;
 
 checkLogin(router);
 Vue.use(plugin);
+Vue.use(VueLazyload);
 
 new Vue({
   router,

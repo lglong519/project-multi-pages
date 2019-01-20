@@ -5,7 +5,7 @@
 			<ul>
 				<li v-for="(item,i) of list" :key="i" v-book="item.id">
 					<div class="cover">
-						<img :src="item.cover" :onerror="global.defaultImg">
+						<img v-lazy="item.cover" :onerror="global.defaultImg">
 					</div>
 					<div>
 						<h3>{{item.title}}<span class="views">

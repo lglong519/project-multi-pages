@@ -6,10 +6,12 @@ import "@/styles/common.scss";
 import "font-awesome/css/font-awesome.min.css";
 import singleRouter from "@/utils/singleRouter";
 import plugin from "@/plugin";
-Vue.use(plugin);
+import VueLazyload from "vue-lazyload";
 
 Vue.config.productionTip = false;
 
+Vue.use(plugin);
+Vue.use(VueLazyload);
 new Vue({
   router: singleRouter("top", () => import("./index.vue")),
   render: h => h(App, { props: { title: "总排行榜" } }),
