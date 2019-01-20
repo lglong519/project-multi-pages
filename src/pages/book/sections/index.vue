@@ -37,6 +37,10 @@
 				<ul class="sections">
 					<li v-for="(item,i) of sections" :key="i" v-section="item.id">{{item.title}}</li>
 				</ul>
+				<div class="btn-group">
+					<button type="button" :class="{disabled:currentPage <= 0}" @click="prev">上一页</button>
+					<button type="button" :class="{disabled:currentPage >=pages-1}" @click="next">下一页</button>
+				</div>
 			</div>
 		</layout>
 	</div>
@@ -58,6 +62,8 @@ export default class Sections extends Vue {
   sections: any = [];
   newSections: any = [];
   count: number = 0;
+  pages: number = 0;
+  currentPage: number = 0;
   get title() {
     return `${this.book.title || ""} 目录(共${this.count}章)`;
   }
@@ -65,8 +71,11 @@ export default class Sections extends Vue {
     this.book = await this.get("books/" + this.$route.query.bid);
   }
   async getSections() {
-    let res = await this.query("books/" + this.$route.query.bid + "/sections");
+    let res = await this.query("books/" + this.$route.query.bid + "/sections", {
+      p: this.currentPage,
+    });
     this.count = res.headers["x-total-count"];
+    this.pages = res.headers["x-total-pages"];
     this.sections = res.data;
   }
   async getRecent() {
@@ -85,7 +94,7 @@ export default class Sections extends Vue {
       this.vshow = true;
     }
     await this.getSections();
-    this.getBook();
+    await this.getBook();
     this.getRecent();
   }
   async addToBookshelf() {
@@ -97,6 +106,20 @@ export default class Sections extends Vue {
       localStorage.removeItem("accessToken");
       location.href = "/user/signin.html?redirect=" + location.href;
     }
+  }
+  prev() {
+    if (this.currentPage <= 0) {
+      return;
+    }
+    this.currentPage--;
+    this.getSections();
+  }
+  next() {
+    if (this.currentPage >= this.pages - 1) {
+      return;
+    }
+    this.currentPage++;
+    this.getSections();
   }
 }
 </script>
@@ -162,6 +185,14 @@ button {
   color: #fff;
   background-color: $color_cyan;
   border-radius: 0.2rem;
+  &.disabled {
+    cursor: not-allowed;
+    background-color: #ecf5ff;
+    color: $color_font_light;
+    &:focus {
+      outline: 0;
+    }
+  }
 }
 .tab {
   margin: 0.5rem 0;

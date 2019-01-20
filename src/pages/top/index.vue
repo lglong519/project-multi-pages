@@ -1,5 +1,5 @@
 <template>
-	<block-list :blocks="blocks" filter="top"></block-list>
+	<block-list :blocks="blocks" filter="top"></block-list>		
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";

@@ -7,8 +7,10 @@ body {
 	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 	color: $color_font_std;
 	background-color: $color_bg;
-	&::-webkit-scrollbar {
-		display: none;
+	@media only screen and (max-width:992px){
+		&::-webkit-scrollbar {
+			display: none;
+		}
 	}
 }
 
@@ -31,6 +33,23 @@ p {
 
 .clr-red{
 	color: $color_red;
+}
+
+.no-more{
+	margin: 1rem auto;
+	text-align: center;
+	color: $color_font_light;
+	.fa{
+		animation: 1s spanning linear infinite normal;
+	}
+}
+@keyframes spanning{
+    0%{
+           transform: rotate(0);
+    }
+    100%{
+           transform: rotate(360deg);
+    }       
 }
 
 %nowrap{
