@@ -42,6 +42,7 @@
 	</style>
   </head>
   <body>
+	<%= VUE_APP_TRACE %>
     <noscript>
       <strong>We're sorry but multi-pages doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
@@ -107,5 +108,9 @@
 			<div class="mask" >loading...</div>
 		</div>
 	</div>
+	<script src="https://cdn.bootcss.com/lodash.js/4.17.11/lodash<%= VUE_APP_MIN %>js"></script>
+	<script src="https://cdn.bootcss.com/vue/2.5.17/vue<%= VUE_APP_MIN %>js"></script>
+	<script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router<%= VUE_APP_MIN %>js"></script>
+	<script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios<%= VUE_APP_MIN %>js"></script>
   </body>
 </html>

@@ -43,4 +43,12 @@ module.exports = {
     https: false,
     open: true,
   },
+  configureWebpack: {
+    externals: {
+      lodash: "_",
+      vue: "Vue",
+      "vue-router": "VueRouter",
+      axios: "axios",
+    },
+  },
 };

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import store from "./store";
+// import store from "./store";
 import "./registerServiceWorker";
 import "normalize.css/normalize.css";
 import "./styles/common.scss";
@@ -18,6 +18,6 @@ Vue.use(VueLazyload);
 
 new Vue({
   router,
-  store,
+  //   store,
   render: h => h(App),
 }).$mount("#app");
