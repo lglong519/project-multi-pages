@@ -1,9 +1,13 @@
 <template>
-	<block-list :blocks="blocks"></block-list>
+	<div>
+		<block-list :blocks="blocks" filter="sort"></block-list>
+	</div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import BlockList from "@/components/BlockList.vue";
+import CardList from "@/components/CardList.vue";
+
 @Component({
   components: {
     BlockList,

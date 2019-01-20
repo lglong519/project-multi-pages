@@ -3,23 +3,23 @@
 		<header>
 			<template v-if="headerType=='index'">
 				<span class="icon left">
-					<a href="/user/bookshelf.html"><i class="fa fa-user"></i></a>
+					<a v-to="'/user/bookshelf.html'"><i class="fa fa-user"></i></a>
 				</span>
 				<span>{{title}}</span>
 				<span class="icon right" @click="searchVisible=!searchVisible"><i class="fa fa-search"></i></span>
 			</template>
 			<template v-if="headerType=='main'">
 				<span class="icon left">
-					<a href="/index"><i class="fa fa-home"></i></a>
+					<a v-to="'/index'"><i class="fa fa-home"></i></a>
 				</span>
 				<span>{{title}}</span>
 				<span class="icon right">
-					<a href="/user/bookshelf.html"><i class="fa fa-user"></i></a>
+					<a v-to="'/user/bookshelf.html'"><i class="fa fa-user"></i></a>
 				</span>
 			</template>
 			<template v-if="headerType=='bookshelf'">
 				<span class="icon left">
-					<a href="/index"><i class="fa fa-home"></i></a>
+					<a v-to="'/index'"><i class="fa fa-home"></i></a>
 				</span>
 				<span>{{title}}</span>
 				<span class="text right" @click="logout">
@@ -32,7 +32,7 @@
 				</span>
 				<span class="title">{{title}}</span>
 				<span class="text right">
-					<a href="/index" class="btn">首页</a>
+					<a v-to="'/index'" class="btn">首页</a>
 				</span>
 			</template>
 			<template v-if="$slots.title">
@@ -47,10 +47,10 @@
 			<button class="search-btn"><i class="fa fa-search"></i></button>
 		</div>
 		<nav v-if="showNav">
-			<a href="/index">首页</a>
-			<a href="/sort.html">分类</a>
-			<a href="/top.html">排行</a>
-			<a href="/full.html">完本</a>
+			<a v-to="'/index'">首页</a>
+			<a v-to="'/sort.html'">分类</a>
+			<a v-to="'/top.html'">排行</a>
+			<a v-to="'/full.html'">完本</a>
 		</nav>
 	</div>
 </template>
@@ -92,6 +92,11 @@ export default class AppHeader extends Vue {
       localStorage.removeItem("accessToken");
       location.replace("/index");
       window.history.forward();
+    }
+  }
+  created() {
+    if (this.title) {
+      document.title = this.title;
     }
   }
 }

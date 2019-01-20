@@ -1,5 +1,5 @@
 <template>
-	<block-list :blocks="blocks"></block-list>
+	<block-list :blocks="blocks" filter="top"></block-list>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
@@ -13,51 +13,51 @@ export default class Top extends Vue {
   blocks: any = [
     {
       name: "日点击榜",
-      path: "?top=dayvisit",
+      path: "?type=dayvisit",
     },
     {
       name: "周点击榜",
-      path: "?top=weekvisit",
+      path: "?type=weekvisit",
     },
     {
       name: "月点击榜",
-      path: "?top=monthvisit",
+      path: "?type=monthvisit",
     },
     {
       name: "总点击榜",
-      path: "?top=allvisit",
+      path: "?type=views",
     },
     {
       name: "周推荐榜",
-      path: "?top=weekvote",
+      path: "?type=weekvote",
     },
     {
       name: "月推荐榜",
-      path: "?top=monthvote",
+      path: "?type=monthvote",
     },
     {
       name: "总推荐榜",
-      path: "?top=allvote",
+      path: "?type=allvote",
     },
     {
       name: "总收藏榜",
-      path: "?top=allFavor",
+      path: "?type=goodnum",
     },
     {
       name: "字数排行",
-      path: "?top=size",
+      path: "?type=size",
     },
     {
       name: "最新入库",
-      path: "?top=createdAt",
+      path: "?type=uploadDate",
     },
     {
       name: "最近更新",
-      path: "?top=updatedAt",
+      path: "?type=updateDate",
     },
     {
       name: "新书榜单",
-      path: "?top=new",
+      path: "?type=goodnew",
     },
   ];
 }

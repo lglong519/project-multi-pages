@@ -1,6 +1,6 @@
 <template>
 	<div id="app" :class="{off:light=='off'}" v-if="vshow">
-		<layout :title="title">
+		<layout :title="title" v-if="section.title">
 			<div class="app-main">
 				<div class="btn-settings">
 					<div class="left">
@@ -14,29 +14,87 @@
 					</div>
 				</div>
 				<div class="btn-groups">
-					<button><a v-book="123">目录</a></button>
-					<button class="disabled" disabled><a v-section="123">上一章</a></button>
-					<button><a v-section="123">下一章</a></button>
+					<button><a v-book="section.book">目录</a></button>
+					<button><a v-section="section.prev">上一章</a></button>
+					<button><a v-section="section.next">下一章</a></button>
 					<button @click="bookmark">加书签</button>
 				</div>
 				<div class="contents" :class="fontSize" v-html="section.contents"></div>
 				<div class="btn-groups">
-					<button><a v-book="123">目录</a></button>
-					<button class="disabled" disabled><a v-section="123">上一章</a></button>
-					<button><a v-section="123">下一章</a></button>
+					<button><a v-book="section.book">目录</a></button>
+					<button><a v-section="section.prev">上一章</a></button>
+					<button><a v-section="section.next">下一章</a></button>
 					<button @click="bookmark">加书签</button>
 				</div>
 			</div>
 		</layout>
 	</div>
 </template>
- 
+
+<script lang="ts">
+import { Component, Provide } from "vue-property-decorator";
+import Layout from "@/components/layout/Layout.vue";
+import Vue from "@/types";
+
+@Component({
+  components: {
+    Layout,
+  },
+})
+export default class Sections extends Vue {
+  vshow: boolean = false;
+  section: any = {};
+  fontSize: string = localStorage.getItem("fontSize") || "";
+  light: string = localStorage.getItem("light") || "on";
+  get title() {
+    return `${this.section.title}`;
+  }
+  async getSection() {
+    this.section = await this.get(
+      `books/sections/${this.$route.query.sid}/contents`
+    );
+  }
+  beforeCreate() {
+    if (!this.$route.query.sid) {
+      return location.replace("/404?url=" + location.href);
+    }
+  }
+  created() {
+    this.$route.path = "contents.html";
+    if (this.$route.query.sid) {
+      this.vshow = true;
+      this.getSection();
+    }
+  }
+  setFontSize(size: string) {
+    if (typeof size == "string" && size) {
+      this.fontSize = size;
+      localStorage.setItem("fontSize", size);
+    }
+  }
+  toggleLight() {
+    this.light = "onoff".replace(this.light, "");
+    localStorage.setItem("light", this.light);
+  }
+  async bookmark() {
+    if (localStorage.getItem("accessToken")) {
+      await this.post(
+        `books/${this.section.book}/sections/${this.$route.query.sid}/mark`
+      );
+      return alert("加入书签成功！");
+    }
+    if (confirm(`未登录，是否前往登录?`)) {
+      localStorage.removeItem("accessToken");
+      location.href = "/user/signin.html?redirect=" + location.href;
+    }
+  }
+}
+</script>
+
 <style lang="scss" scoped>
 @import "../../../../styles/variables.scss";
-$color_coments: #e7f4fe;
 
 #app {
-  background-color: $color_coments;
   .disabled {
     cursor: not-allowed;
   }
@@ -99,6 +157,7 @@ $color_coments: #e7f4fe;
 .contents {
   text-indent: 2rem;
   color: $color_font_mid;
+  line-height: 1.7;
   &.lg {
     font-size: 1.2rem;
   }
@@ -113,6 +172,9 @@ $color_coments: #e7f4fe;
 <style  lang="scss">
 @import "../../../../styles/variables.scss";
 
+body {
+  background-color: $color_bg_azure !important;
+}
 #app {
   &.off {
     background-color: $color_bg_off;
@@ -124,54 +186,3 @@ $color_coments: #e7f4fe;
   }
 }
 </style>
-
-<script lang="ts">
-import { Component, Vue, Provide } from "vue-property-decorator";
-import Layout from "@/components/layout/Layout.vue";
-import section from "./section";
-
-@Component({
-  components: {
-    Layout,
-  },
-})
-export default class Sections extends Vue {
-  vshow: boolean = false;
-  section: any = section;
-  fontSize: string = localStorage.getItem("fontSize") || "";
-  light: string = localStorage.getItem("light") || "on";
-  get title() {
-    return `${this.section.title}`;
-  }
-  beforeCreate() {
-    if (!/sid=\w+/i.test(location.href)) {
-      return location.replace("/404?url=" + location.href);
-    }
-  }
-  created() {
-    this.$route.path = "contents.html";
-    if (/sid=\w+/i.test(location.href)) {
-      this.vshow = true;
-    }
-  }
-  setFontSize(size: string) {
-    if (typeof size == "string" && size) {
-      this.fontSize = size;
-      localStorage.setItem("fontSize", size);
-    }
-  }
-  toggleLight() {
-    this.light = "onoff".replace(this.light, "");
-    localStorage.setItem("light", this.light);
-  }
-  bookmark() {
-    if (localStorage.getItem("accessToken")) {
-      return alert("加入书签成功！");
-    }
-    if (confirm(`未登录，是否前往登录?`)) {
-      localStorage.removeItem("accessToken");
-      location.href = "/user/signin.html";
-    }
-  }
-}
-</script>

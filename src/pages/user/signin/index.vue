@@ -2,11 +2,11 @@
 	<div class="app-container">
 		<form>
 			<div class="row">
-				<label for="username">帐号</label>
-				<input type="text" v-model="formData.username" name="username" placeholder="请输入帐号">
+				<label for="login"><i class="clr-red">* </i>帐号</label>
+				<input type="text" v-model="formData.login" name="login" placeholder="请输入帐号">
 			</div>
 			<div class="row">
-				<label for="password">密码</label>
+				<label for="password"><i class="clr-red">* </i>密码</label>
 				<input type="password" v-model="formData.password" placeholder="请输入密码">
 			</div>
 			<div class="row btns">
@@ -16,6 +16,42 @@
 		</form>
 	</div>
 </template>
+
+<script lang="ts">
+import { Component } from "vue-property-decorator";
+import Vue from "@/types";
+
+@Component
+export default class Signin extends Vue {
+  formData: any = {
+    login: "",
+    password: "",
+    client: "BOOK",
+  };
+  async corfirm() {
+    let token = await this.post("dis/access-tokens", this.formData);
+    localStorage.setItem("accessToken", token.accessToken);
+    let redirect = location.href.match(/redirect=(.*)+/);
+    if (redirect) {
+      return location.replace(decodeURIComponent(redirect[1]));
+    }
+    location.replace("/user/bookshelf.html");
+  }
+  signup() {
+    let redirect = location.href.match(/redirect=(.*)+/);
+    if (redirect) {
+      return location.replace("/user/signup.html?redirect=" + redirect[1]);
+    }
+    location.replace("/user/signup.html");
+  }
+  beforeCreate() {
+    if (localStorage.getItem("accessToken")) {
+      return location.replace("/user/bookshelf.html");
+    }
+  }
+}
+</script>
+
 <style lang="scss" scoped>
 @import "../../../styles/variables.scss";
 
@@ -52,30 +88,3 @@
   }
 }
 </style>
-
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-
-@Component
-export default class Signin extends Vue {
-  formData: any = {
-    username: "",
-    password: "",
-  };
-  corfirm() {
-    localStorage.setItem("accessToken", "9527");
-    let redirect = location.href.match(/redirect=(.*)+/);
-    if (redirect) {
-      return (location.href = decodeURIComponent(redirect[1]));
-    }
-    location.href = "/user/bookshelf.html";
-  }
-  signup() {
-    let redirect = location.href.match(/redirect=(.*)+/);
-    if (redirect) {
-      return (location.href = "/user/signup.html?redirect=" + redirect[1]);
-    }
-    location.href = "/user/signup.html";
-  }
-}
-</script>

@@ -3,7 +3,7 @@
 		<div class="title">{{title}}</div>
 		<div class="content">
 			<ul>
-				<li v-for="(item,i) of list" :key="i" v-book="123">
+				<li v-for="(item,i) of list" :key="i" v-book="item.id">
 					<div class="cover">
 						<img :src="item.cover" :onerror="global.defaultImg">
 					</div>
@@ -12,7 +12,7 @@
 							<slot :data="item"><i>{{item.views}}</i>人在看</slot>
 						</span></h3>
 						<div class="author">作者: {{item.author}}</div>
-						<p class="summary">{{item.summary}}</p>
+						<p class="summary">{{item.info}}</p>
 					</div>
 				</li>
 			</ul>

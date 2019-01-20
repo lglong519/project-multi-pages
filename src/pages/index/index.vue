@@ -1,45 +1,31 @@
 <template>
   <div class="home">
-    <div class="recommend">
+    <div class="recommend" v-if="hotData.length">
 		<div class="title">本站推荐</div>
 		<div class="content">
 			<ul>
-				<li>
-					<a v-book="123">
-						<div class="img" :style="'background-image:url('+'https://m.biquke.com/files/article/image/22/22572/22572s.jpg'+')'">
+				<li v-for="(item,i) of hotData.slice(0,3)" :key="i">
+					<a v-book="item.id">
+						<div class="img" :style="'background-image:url('+item.cover+')'">
 						</div>
-						<span>无行天</span>
-					</a>
-				</li>
-				<li>
-					<a v-book="123">
-						<div class="img" :style="'background-image:url('+'https://www.biquke.com/files/article/image/34/34900/34900s.jpg'+')'">
-						</div>
-						<span>圣墟</span>
-					</a>
-				</li>
-				<li>
-					<a v-book="123">
-						<div class="img" :style="'background-image:url('+'https://www.biquke.com/files/article/image/3/3714/3714s.jpg'+')'">
-						</div>
-						<span>飞剑问道</span>
+						<span>{{item.title}}</span>
 					</a>
 				</li>
 			</ul>
 		</div>
 	</div>
-	<card-list title="热门推荐" :list="fictions"></card-list>
-    <div class="recent-update">
+	<card-list title="热门推荐" :list="hotData" v-if="hotData.length"></card-list>
+    <div class="recent-update" v-if="newData.length">
 		<div class="title">最近更新</div>
 		<div class="content">
 			<ul>
-				<li v-for="(item,i) of fictions" :key="i">
-					<div v-book="123">
+				<li v-for="(item,i) of newData" :key="i">
+					<div v-book="item.id">
 						{{i+1}}.<span class="title">{{item.title}}</span> - 
 						<span class="author">{{item.author}}</span>
-						<span class="createdAt"><i>{{item.createdAt | dateTime("MM-DD HH:mm")}}</i></span>
+						<span class="createdAt"><i>{{item.updatedAt | dateTime("MM-DD HH:mm")}}</i></span>
 					</div>
-					<p class="summary">{{item.summary}}</p>
+					<p class="summary">{{item.info}}</p>
 				</li>
 			</ul>
 		</div>
@@ -48,8 +34,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
 import CardList from "@/components/CardList.vue";
+import Vue from "@/types";
 
 @Component({
   components: {
@@ -57,44 +44,18 @@ import CardList from "@/components/CardList.vue";
   },
 })
 export default class Home extends Vue {
-  fictions: any = [
-    {
-      cover: "https://www.biquke.com/files/article/image/27/27317/27317s.jpg",
-      title: "title",
-      author: "author",
-      views: 4399,
-      summary:
-        "今天爱就爱叫佛法缴费机安检哦啊哦安静挂机挂机爱啦啦去哦去哦俺姥阿帕奇;安静挂机挂机爱啦啦去哦去哦哦贴哦安排在苹果奥法哦哦去领取",
-      createdAt: new Date(),
-    },
-    {
-      cover: "https://www.biquke.com/files/article/image/27/27317/27317s.jpg",
-      title: "title",
-      author: "author",
-      views: 4399,
-      summary:
-        "今天爱就爱叫佛法缴费机安检哦啊哦俺姥阿帕奇;安静挂机挂机爱啦啦去哦啊哦俺姥阿哦去哦哦贴哦安排在苹果奥法哦哦去领取",
-      createdAt: new Date(),
-    },
-    {
-      cover: "https://www.biquke.com/files/article/image/27/27317/27317s.jpg",
-      title: "title",
-      author: "author",
-      views: 4399,
-      summary:
-        "今天爱就爱叫佛法缴费机安检哦啊哦俺姥阿帕奇;安静挂机挂机爱啦哦啊哦俺姥阿啦去哦去哦哦贴哦安排在苹果奥法哦哦去领取",
-      createdAt: new Date(),
-    },
-    {
-      cover: "https://www.biquke.com/files/article/image/27/27317/27317s.jpg",
-      title: "title",
-      author: "author",
-      views: 4399,
-      summary:
-        "今天爱就爱叫佛法缴费机安检哦啊哦俺姥阿帕奇;安静挂机挂机爱啦啦哦啊哦俺姥阿去哦去哦哦贴哦安排在苹果奥法哦哦去领取",
-      createdAt: new Date(),
-    },
-  ];
+  hotData: any = [];
+  newData: any = [];
+  async getHot() {
+    this.hotData = await this.get("books/");
+  }
+  async getRecent() {
+    this.newData = await this.get("books/?sort=-updatedAt");
+  }
+  async created() {
+    await this.getHot();
+    await this.getRecent();
+  }
 }
 </script>
 <style lang="scss" src="./index.scss" scoped>
