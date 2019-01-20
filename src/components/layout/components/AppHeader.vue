@@ -5,14 +5,14 @@
 				<span class="icon left">
 					<a v-to="'/user/bookshelf.html'"><i class="fa fa-user"></i></a>
 				</span>
-				<span>{{title}}</span>
+				<span class="title">{{title}}</span>
 				<span class="icon right" @click="searchVisible=!searchVisible"><i class="fa fa-search"></i></span>
 			</template>
 			<template v-if="headerType=='main'">
 				<span class="icon left">
 					<a v-to="'/index'"><i class="fa fa-home"></i></a>
 				</span>
-				<span>{{title}}</span>
+				<span class="title">{{title}}</span>
 				<span class="icon right">
 					<a v-to="'/user/bookshelf.html'"><i class="fa fa-user"></i></a>
 				</span>
@@ -21,7 +21,7 @@
 				<span class="icon left">
 					<a v-to="'/index'"><i class="fa fa-home"></i></a>
 				</span>
-				<span>{{title}}</span>
+				<span class="title">{{title}}</span>
 				<span class="text right" @click="logout">
 					注销
 				</span>
