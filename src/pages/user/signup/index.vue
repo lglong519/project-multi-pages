@@ -10,8 +10,8 @@
 				<input type="password" v-model="formData.password" placeholder="请输入密码">
 			</div>
 			<div class="row">
-				<label for="password"><i class="clr-red">* </i>确认</label>
-				<input type="password" v-model="formData.password" placeholder="请确认密码">
+				<label for="repassword"><i class="clr-red">* </i>确认</label>
+				<input type="password" v-model="repassword" placeholder="请确认密码">
 			</div>
 			<div class="row">
 				<label for="email"><i style="visibility:hidden">* </i>邮箱</label>
@@ -37,11 +37,21 @@ export default class Signup extends Vue {
     email: "",
     client: "BOOK",
   };
+  repassword: string = "";
   @Watch("formData", { deep: true })
   onFormDataChanged() {
     localStorage.setItem("signup", JSON.stringify(this.formData));
   }
   async corfirm() {
+    if (!/^[A-Za-z_]\w{3}/.test(this.formData.username)) {
+      return alert("帐号格式不正确:至少四个字符,以下划线或字母开头");
+    }
+    if (!/^\w{6}/.test(this.formData.password)) {
+      return alert("密码格式不正确:至少六位由下划线、字母或数字组成");
+    }
+    if (this.formData.password != this.repassword) {
+      return alert("两次输入密码不一致");
+    }
     let token = await this.post("dis/me", this.formData);
     localStorage.setItem("accessToken", token.accessToken);
     localStorage.removeItem("signup");
