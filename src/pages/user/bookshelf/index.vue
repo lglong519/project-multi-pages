@@ -17,6 +17,7 @@
 <script lang="ts">
 import { Component } from "vue-property-decorator";
 import Vue from "@/types";
+import * as _ from "lodash";
 
 @Component
 export default class Bookshelf extends Vue {
@@ -27,9 +28,19 @@ export default class Bookshelf extends Vue {
     this.bookList = this.bookshelf.books;
   }
   async remove(item: any, index: number) {
+    if (!localStorage.getItem("accessToken")) {
+      alert("未登录");
+      return (location.href = "/user/signin.html");
+    }
     if (item && item.id && confirm(`确定要删除 ${item.btitle}?`)) {
-      await this.del(`dis/me/bookshelf/books/${item.book}`);
-      this.getData();
+      try {
+        await this.del(`dis/me/bookshelf/books/${item.book}`);
+        await this.getData();
+      } catch (e) {
+        if (_.get(e, "response.status") === 401) {
+          location.href = "/user/signin.html";
+        }
+      }
     }
   }
   created() {

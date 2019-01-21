@@ -7,4 +7,5 @@ export default class extends Vue {
   patch: any;
   del: any;
   _route: any;
+  bus: any;
 }

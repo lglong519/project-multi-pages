@@ -2,7 +2,7 @@
     <div class="card-list">
 		<div class="title">{{title}}</div>
 		<div class="content">
-			<ul>
+			<ul v-if="list.length">
 				<li v-for="(item,i) of list" :key="i" v-book="item.id">
 					<div class="cover">
 						<img v-lazy="item.cover" :onerror="global.defaultImg">
@@ -16,6 +16,7 @@
 					</div>
 				</li>
 			</ul>
+			<div v-else class="no-more">没有更多内容了</div>
 		</div>
 	</div>
 </template>

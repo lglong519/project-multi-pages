@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<div class="no-more" v-if="loading"><i class="fa fa-spinner"></i> 内容加载中...</div>
-		<div class="no-more" v-if="!loading&&pages-currentPage<=1">没有更多内容了</div>
-		<div class="no-more" v-if="!loading&&pages-currentPage>1">滚动加载更多</div>
+		<div class="no-more" v-if="loading"><i class="fa fa-spinner"></i> 正在加载...</div>
+		<div class="no-more" v-if="!loading&&pages-currentPage<=1">没有更多了</div>
+		<div class="no-more" v-if="!loading&&pages-currentPage>1">查看更多</div>
 	</div>
 </template>
 

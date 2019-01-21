@@ -49,10 +49,8 @@ service.interceptors.response.use(
       localStorage.removeItem(LOCAL_SESSION);
       message = "未登录";
       _.get(error, "response.status") === 403 && (message = "权限不足");
-      alert(message);
-      return (location.href = "/user/signin.html?redirect=" + location.href);
     }
-    if (typeof _.get(error, "response.data") == "string") {
+    if (typeof _.get(error, "response.data") == "string" && !message) {
       message = _.get(error, "response.data")
         .replace(/(.*)?message(.*)/, "$2")
         .replace(/[":}]/g, "");

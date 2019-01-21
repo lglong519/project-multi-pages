@@ -3,11 +3,11 @@
 		<form>
 			<div class="row">
 				<label for="login"><i class="clr-red">* </i>帐号</label>
-				<input type="text" v-model="formData.login" name="login" placeholder="请输入帐号">
+				<input @keyup.enter="corfirm" type="text" v-model="formData.login" name="login" placeholder="请输入帐号">
 			</div>
 			<div class="row">
 				<label for="password"><i class="clr-red">* </i>密码</label>
-				<input type="password" v-model="formData.password" placeholder="请输入密码">
+				<input @keyup.enter="corfirm" type="password" v-model="formData.password" placeholder="请输入密码">
 			</div>
 			<div class="row btns">
 				<button type="button" @click="corfirm">确定登录</button>

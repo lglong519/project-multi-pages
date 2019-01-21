@@ -10,15 +10,22 @@ export default {
     Vue.prototype.global = {
       defaultImg: 'this.src="' + require("@/assets/default.png") + '"',
     };
+    Vue.prototype.bus = new Vue();
     Vue.prototype["_route"] = new Proxy(
       { path: undefined, fullPath: undefined, query: undefined },
       {
         get(t, p) {
           if (p === "path") {
+            if (t[p] !== undefined) {
+              return t[p];
+            }
             let pathReg = /^https?:\/{2}([^/]*)?(?=\/)|\?.*$/g;
             return location.href.replace(pathReg, "");
           }
           if (p === "fullPath") {
+            if (t[p] !== undefined) {
+              return t[p];
+            }
             let pathReg = /https?:\/{2}([^/]*)?(?=\/)/;
             return location.href.replace(pathReg, "");
           }
@@ -88,7 +95,7 @@ Vue.directive("to", {
           return;
         }
         if (confirm(`未登录，是否前往登录?`)) {
-          location.href = "/user/signin.html?redirect=" + location.href;
+          location.href = "/user/signin.html";
         }
         return;
       }

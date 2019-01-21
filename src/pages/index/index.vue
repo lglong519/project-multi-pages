@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <div class="recommend" v-if="hotData.length">
+	<card-list title="搜索结果" :list="searchData" v-if="searchValue"></card-list>
+    <div class="recommend" v-if="hotData.length && !searchValue">
 		<div class="title">本站推荐</div>
 		<div class="content">
 			<ul>
@@ -14,8 +15,8 @@
 			</ul>
 		</div>
 	</div>
-	<card-list title="热门推荐" :list="hotData" v-if="hotData.length"></card-list>
-    <div class="recent-update" v-if="newData.length">
+	<card-list title="热门推荐" :list="hotData" v-if="hotData.length && !searchValue"></card-list>
+    <div class="recent-update" v-if="newData.length && !searchValue">
 		<div class="title">最近更新</div>
 		<div class="content">
 			<ul>
@@ -46,13 +47,34 @@ import Vue from "@/types";
 export default class Home extends Vue {
   hotData: any = [];
   newData: any = [];
+  searchData: any = [];
+  searchType: string = "title";
+  searchValue: string = "";
+
   async getHot() {
     this.hotData = await this.get("books/");
   }
   async getRecent() {
     this.newData = await this.get("books/?sort=-updatedAt");
   }
+  async searchBooks() {
+    if (!this.searchValue) {
+      return;
+    }
+    this.searchData = await this.get("books/?sort=-updatedAt", {
+      like: {
+        [this.searchType]: this.searchValue,
+      },
+    });
+  }
   async created() {
+    this.bus.$on("switchSearchType", (type: string) => {
+      this.searchType = type;
+    });
+    this.bus.$on("search", (value: string) => {
+      this.searchValue = value;
+      this.searchBooks();
+    });
     await this.getHot();
     await this.getRecent();
   }
