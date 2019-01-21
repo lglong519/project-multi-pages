@@ -34,7 +34,7 @@
 				<div class="tab">
 					全部章节列表
 				</div>
-				<ul class="sections">
+				<ul class="sections" v-if="sections.length">
 					<li v-for="(item,i) of sections" :key="i" v-section="item.id">{{item.title}}</li>
 				</ul>
 				<div class="btn-group">
@@ -68,10 +68,10 @@ export default class Sections extends Vue {
     return `${this.book.title || ""} 目录(共${this.count}章)`;
   }
   async getBook() {
-    this.book = await this.get("books/" + this.$route.query.bid);
+    this.book = await this.get("books/" + this._route.query.bid);
   }
   async getSections() {
-    let res = await this.query("books/" + this.$route.query.bid + "/sections", {
+    let res = await this.query("books/" + this._route.query.bid + "/sections", {
       p: this.currentPage,
     });
     this.count = res.headers["x-total-count"];
@@ -80,17 +80,17 @@ export default class Sections extends Vue {
   }
   async getRecent() {
     this.newSections = await this.get(
-      "books/" + this.$route.query.bid + "/sections?sort=-sequence&pageSize=5"
+      "books/" + this._route.query.bid + "/sections?sort=-sequence&pageSize=5"
     );
   }
   beforeCreate() {
-    if (!this.$route.query.bid) {
+    if (!this._route.query.bid) {
       return location.replace("/404?url=" + location.href);
     }
   }
   async created() {
-    this.$route.path = "sections";
-    if (this.$route.query.bid) {
+    this._route.path = "sections";
+    if (this._route.query.bid) {
       this.vshow = true;
     }
     await this.getSections();
@@ -99,7 +99,7 @@ export default class Sections extends Vue {
   }
   async addToBookshelf() {
     if (localStorage.getItem("accessToken")) {
-      await this.post(`books/${this.$route.query.bid}/mark`);
+      await this.post(`books/${this._route.query.bid}/mark`);
       return alert("加入书架成功！");
     }
     if (confirm(`未登录，是否前往登录?`)) {
@@ -111,6 +111,7 @@ export default class Sections extends Vue {
     if (this.currentPage <= 0) {
       return;
     }
+    this.sections = [];
     this.currentPage--;
     this.getSections();
   }
@@ -118,6 +119,7 @@ export default class Sections extends Vue {
     if (this.currentPage >= this.pages - 1) {
       return;
     }
+    this.sections = [];
     this.currentPage++;
     this.getSections();
   }

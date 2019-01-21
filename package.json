@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-	"build": "vue-cli-service build && npm run deploy",
-	"deploy": "rsync -rv --delete ./dist/* root@mofunc.com:/root/data/book",
+    "build": "vue-cli-service build && npm run deploy",
+    "deploy": "rsync -rv --delete ./dist/* root@mofunc.com:/root/data/book",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

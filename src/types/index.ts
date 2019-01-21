@@ -6,5 +6,5 @@ export default class extends Vue {
   post: any;
   patch: any;
   del: any;
-  $route: any;
+  _route: any;
 }

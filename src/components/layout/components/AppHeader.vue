@@ -56,7 +56,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Inject } from "vue-property-decorator";
+import { Component, Inject } from "vue-property-decorator";
+import Vue from "@/types";
+
 @Component
 export default class AppHeader extends Vue {
   @Inject("title") title!: string;
@@ -64,22 +66,24 @@ export default class AppHeader extends Vue {
   private searchType: string = "书名";
   searchVisible: boolean = false;
   get headerType() {
-    if (this.$route.path.includes("sections")) {
+    let route = this.$route || this._route;
+    if (route.path.includes("sections")) {
       return "sections";
     }
-    if (this.$route.path.includes("bookshelf")) {
+    if (route.path.includes("bookshelf")) {
       return "bookshelf";
     }
-    if (this.$route.path.startsWith("/404")) {
+    if (route.path.startsWith("/404")) {
       return "404";
     }
-    if (this.$route.path.includes(".html")) {
+    if (route.path.includes(".html")) {
       return "main";
     }
     return "index";
   }
   get showNav() {
-    if (/sections|contents/.test(this.$route.path)) {
+    let route = this.$route || this._route;
+    if (/sections|contents/.test(route.path)) {
       return false;
     }
     return true;

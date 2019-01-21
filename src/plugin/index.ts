@@ -10,12 +10,20 @@ export default {
     Vue.prototype.global = {
       defaultImg: 'this.src="' + require("@/assets/default.png") + '"',
     };
-    if (!("$route" in Vue.prototype)) {
-      Vue.prototype["$route"] = {
-        path: "",
-        query: {
-          ...(function() {
-            let match = location.href.match(/\?(.*)+/);
+    Vue.prototype["_route"] = new Proxy(
+      { path: undefined, fullPath: undefined, query: undefined },
+      {
+        get(t, p) {
+          if (p === "path") {
+            let pathReg = /^https?:\/{2}([^/]*)?(?=\/)|\?.*$/g;
+            return location.href.replace(pathReg, "");
+          }
+          if (p === "fullPath") {
+            let pathReg = /https?:\/{2}([^/]*)?(?=\/)/;
+            return location.href.replace(pathReg, "");
+          }
+          if (p === "query") {
+            let match = location.href.replace(/&+/g, "&").match(/\?(.*)+/);
             if (match) {
               let params = match[1]
                 .split("&")
@@ -23,10 +31,10 @@ export default {
               return Object.assign({}, ...params);
             }
             return {};
-          })(),
+          }
         },
-      };
-    }
+      }
+    );
   },
 };
 
