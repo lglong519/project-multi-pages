@@ -20,7 +20,7 @@
 					<button @click="bookmark">加书签</button>
 				</div>
 				<div class="contents" :class="fontSize" v-html="section.contents"></div>
-				<div class="btn-groups">
+				<div class="btn-groups" v-if="section.contents">
 					<button><a v-book="section.book">目录</a></button>
 					<button><a v-section="section.prev">上一章</a></button>
 					<button><a v-section="section.next">下一章</a></button>

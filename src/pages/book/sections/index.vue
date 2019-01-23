@@ -37,8 +37,12 @@
 				<ul class="sections" v-if="sections.length">
 					<li v-for="(item,i) of sections" :key="i" v-section="item.id">{{item.title}}</li>
 				</ul>
+				<div class="no-more" v-if="loading"><i class="fa fa-spinner"></i> 正在加载...</div>
 				<div class="btn-group">
 					<button type="button" :class="{disabled:currentPage <= 0}" @click="prev">上一页</button>
+					<select name="l" v-if='pages>0' @change="selectPage" v-model="selectedIndex">
+						<option v-for="(item,i) of options" :key="i" :value="i" :selected="currentPage==i" >{{i+1}}</option>
+					</select>
 					<button type="button" :class="{disabled:currentPage >=pages-1}" @click="next">下一页</button>
 				</div>
 			</div>
@@ -47,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Provide } from "vue-property-decorator";
+import { Component, Provide, Watch } from "vue-property-decorator";
 import Layout from "@/components/layout/Layout.vue";
 import Vue from "@/types";
 
@@ -64,16 +68,35 @@ export default class Sections extends Vue {
   count: number = 0;
   pages: number = 0;
   currentPage: number = 0;
+  selectedIndex: number = 0;
+  loading: boolean = false;
+  @Watch("currentPage")
+  handle() {
+    if (this.selectedIndex != this.currentPage) {
+      this.selectedIndex = this.currentPage;
+    }
+  }
   get title() {
     return `${this.book.title || ""} 目录(共${this.count}章)`;
+  }
+  get options() {
+    return [..."".padEnd(this.pages, "1")];
   }
   async getBook() {
     this.book = await this.get("books/" + this._route.query.bid);
   }
   async getSections() {
+    history.pushState(
+      "sections",
+      "currentPage",
+      `?bid=${this._route.query.bid}&p=${this.currentPage}`
+    );
+    this.sections = [];
+    this.loading = true;
     let res = await this.query("books/" + this._route.query.bid + "/sections", {
       p: this.currentPage,
     });
+    this.loading = false;
     this.count = res.headers["x-total-count"];
     this.pages = res.headers["x-total-pages"];
     this.sections = res.data;
@@ -93,8 +116,11 @@ export default class Sections extends Vue {
     if (this._route.query.bid) {
       this.vshow = true;
     }
-    await this.getSections();
+    if (this._route.query.p) {
+      this.currentPage = this._route.query.p;
+    }
     await this.getBook();
+    await this.getSections();
     this.getRecent();
   }
   async addToBookshelf() {
@@ -111,7 +137,6 @@ export default class Sections extends Vue {
     if (this.currentPage <= 0) {
       return;
     }
-    this.sections = [];
     this.currentPage--;
     this.getSections();
   }
@@ -119,8 +144,11 @@ export default class Sections extends Vue {
     if (this.currentPage >= this.pages - 1) {
       return;
     }
-    this.sections = [];
     this.currentPage++;
+    this.getSections();
+  }
+  selectPage() {
+    this.currentPage = this.selectedIndex;
     this.getSections();
   }
 }
@@ -178,8 +206,24 @@ export default class Sections extends Vue {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  select {
+    flex-basis: 3rem;
+    flex-shrink: 0;
+    align-self: stretch;
+    margin: 0 0.5rem;
+    text-align: center;
+    text-align-last: center;
+    background-color: #fff;
+    option {
+      &:hover {
+        color: #fff;
+        background-color: #1e90ff;
+      }
+    }
+  }
 }
 button {
+  flex-shrink: 1;
   padding: 0;
   height: 2.2rem;
   width: 48%;

@@ -28,14 +28,29 @@ export default class Signin extends Vue {
     password: "",
     client: "BOOK",
   };
+  loading: boolean = false;
   async corfirm() {
-    let token = await this.post("dis/access-tokens", this.formData);
-    localStorage.setItem("accessToken", token.accessToken);
-    let redirect = location.href.match(/redirect=(.*)+/);
-    if (redirect) {
-      return location.replace(decodeURIComponent(redirect[1]));
+    if (this.loading) {
+      return;
     }
-    location.replace("/user/bookshelf.html");
+    if (!/^\w{4}/.test(this.formData.login)) {
+      return alert("帐号格式不正确: 请输入帐号或邮箱");
+    }
+    if (!/^\w{6}/.test(this.formData.password)) {
+      return alert("密码格式不正确: 至少六位由下划线、字母或数字组成");
+    }
+    this.loading = true;
+    try {
+      let token = await this.post("dis/access-tokens", this.formData);
+      localStorage.setItem("accessToken", token.accessToken);
+      let redirect = location.href.match(/redirect=(.*)+/);
+      if (redirect) {
+        return location.replace(decodeURIComponent(redirect[1]));
+      }
+      location.replace("/user/bookshelf.html");
+    } catch (e) {
+      this.loading = false;
+    }
   }
   signup() {
     let redirect = location.href.match(/redirect=(.*)+/);

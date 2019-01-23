@@ -38,28 +38,37 @@ export default class Signup extends Vue {
     client: "BOOK",
   };
   repassword: string = "";
+  loading: boolean = false;
   @Watch("formData", { deep: true })
   onFormDataChanged() {
     localStorage.setItem("signup", JSON.stringify(this.formData));
   }
   async corfirm() {
+    if (this.loading) {
+      return;
+    }
     if (!/^[A-Za-z_]\w{3}/.test(this.formData.username)) {
-      return alert("帐号格式不正确:至少四个字符,以下划线或字母开头");
+      return alert("帐号格式不正确: 至少四个字符,以下划线或字母开头");
     }
     if (!/^\w{6}/.test(this.formData.password)) {
-      return alert("密码格式不正确:至少六位由下划线、字母或数字组成");
+      return alert("密码格式不正确: 至少六位由下划线、字母或数字组成");
     }
     if (this.formData.password != this.repassword) {
       return alert("两次输入密码不一致");
     }
-    let token = await this.post("dis/me", this.formData);
-    localStorage.setItem("accessToken", token.accessToken);
-    localStorage.removeItem("signup");
-    let redirect = location.href.match(/redirect=(.*)+/);
-    if (redirect) {
-      return location.replace(decodeURIComponent(redirect[1]));
+    this.loading = true;
+    try {
+      let token = await this.post("dis/me", this.formData);
+      localStorage.setItem("accessToken", token.accessToken);
+      localStorage.removeItem("signup");
+      let redirect = location.href.match(/redirect=(.*)+/);
+      if (redirect) {
+        return location.replace(decodeURIComponent(redirect[1]));
+      }
+      location.replace("/user/bookshelf.html");
+    } catch (e) {
+      this.loading = false;
     }
-    location.replace("/user/bookshelf.html");
   }
   signin() {
     let redirect = location.href.match(/redirect=(.*)+/);
