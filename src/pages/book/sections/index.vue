@@ -41,7 +41,7 @@
 				<div class="btn-group">
 					<button type="button" :class="{disabled:currentPage <= 0}" @click="prev">上一页</button>
 					<select name="l" v-if='pages>0' @change="selectPage" v-model="selectedIndex">
-						<option v-for="(item,i) of options" :key="i" :value="i" :selected="currentPage==i" >{{i+1}}</option>
+						<option v-for="(item,i) of options" :key="i" :value="i" :selected="currentPage==i" >第{{(i+1)*10-9}} - {{(i+1)*10}}章</option>
 					</select>
 					<button type="button" :class="{disabled:currentPage >=pages-1}" @click="next">下一页</button>
 				</div>
@@ -119,8 +119,8 @@ export default class Sections extends Vue {
     if (this._route.query.p) {
       this.currentPage = this._route.query.p;
     }
-    await this.getBook();
     await this.getSections();
+    await this.getBook();
     this.getRecent();
   }
   async addToBookshelf() {
@@ -214,12 +214,8 @@ export default class Sections extends Vue {
     text-align: center;
     text-align-last: center;
     background-color: #fff;
-    option {
-      &:hover {
-        color: #fff;
-        background-color: #1e90ff;
-      }
-    }
+    border-radius: 0.15rem;
+    color: $color_font_light;
   }
 }
 button {
