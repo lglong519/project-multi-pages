@@ -7,15 +7,15 @@
 			</div>
 			<div class="row">
 				<label for="password"><i class="clr-red">* </i>密码</label>
-				<input @keyup.enter="corfirm" type="password" v-model="formData.password" placeholder="请输入密码">
+				<input @keyup.enter="corfirm" type="password" name="password" v-model="formData.password" placeholder="请输入密码">
 			</div>
 			<div class="row">
 				<label for="repassword"><i class="clr-red">* </i>确认</label>
-				<input @keyup.enter="corfirm" type="password" v-model="repassword" placeholder="请确认密码">
+				<input @keyup.enter="corfirm" type="password" name="repassword" v-model="repassword" placeholder="请确认密码">
 			</div>
 			<div class="row">
 				<label for="email"><i style="visibility:hidden">* </i>邮箱</label>
-				<input @keyup.enter="corfirm" type="email" v-model="formData.email" placeholder="请输入邮箱">
+				<input @keyup.enter="corfirm" type="email" name="email" v-model="formData.email" placeholder="请输入邮箱">
 			</div>
 			<div class="row btns">
 				<button type="button" @click="corfirm">确定注册</button>

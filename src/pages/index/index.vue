@@ -1,7 +1,8 @@
 <template>
   <div class="home">
+	<div class="no-more" v-if="loading"><i class="fa fa-spinner"></i> 正在加载...</div>
 	<card-list title="搜索结果" :list="searchData" v-if="searchValue"></card-list>
-    <div class="recommend" v-if="hotData.length && !searchValue">
+    <div class="card recommend" v-if="hotData.length && !searchValue">
 		<div class="title">本站推荐</div>
 		<div class="content">
 			<ul>
@@ -16,7 +17,7 @@
 		</div>
 	</div>
 	<card-list title="热门推荐" :list="hotData" v-if="hotData.length && !searchValue"></card-list>
-    <div class="recent-update" v-if="newData.length && !searchValue">
+    <div class="card recent-update" v-if="newData.length && !searchValue">
 		<div class="title">最近更新</div>
 		<div class="content">
 			<ul>
@@ -50,6 +51,7 @@ export default class Home extends Vue {
   searchData: any = [];
   searchType: string = "title";
   searchValue: string = "";
+  loading: boolean = true;
 
   async getHot() {
     this.hotData = await this.get("books/");
@@ -77,6 +79,7 @@ export default class Home extends Vue {
     });
     await this.getHot();
     await this.getRecent();
+    this.loading = false;
   }
 }
 </script>

@@ -1,16 +1,34 @@
 <template>
-	<div class="app-container">
-		<div v-if="!bookList||!bookList.length" class="empty">
-			<div>还木有任何书籍( ˙﹏˙ )</div>
-		</div>
-		<div v-else class="book-list" v-for="(item,i) of bookList" :key="i">
-			<div>书名: <a v-book="item.book">{{item.btitle}}</a></div>
-			<div>最新: <a v-section="item.sid">{{item.stitle}}</a></div>
-			<div>书签: <a v-if="item.mid" v-section="item.mid">{{item.mtitle}}</a>
-			<span v-else>无书签</span>
+	<div>
+		<div class="app-container">
+			<div class="no-more" v-if="loading"><i class="fa fa-spinner"></i> 正在加载...</div>
+			<div v-if="!bookList||!bookList.length" v-show="!loading" class="empty">
+				<div>还木有任何书籍( ˙﹏˙ )</div>
 			</div>
-			<div class="clr-red" @click="remove(item,i)">删除本书</div>
+			<div v-else class="book-list" v-for="(item,i) of bookList" :key="i">
+				<div>书名: <a v-book="item.book">{{item.btitle}}</a></div>
+				<div>最新: <a v-section="item.sid">{{item.stitle}}</a></div>
+				<div>书签: <a v-if="item.mid" v-section="item.mid">{{item.mtitle}}</a>
+				<span v-else>无书签</span>
+				</div>
+				<div class="clr-red" @click="remove(item,i)">删除本书</div>
+			</div>
 		</div>
+		<div class="card" v-if="footsteps.length && !loading && showRecents">
+			<div class="title">最近浏览 <span class="float-right" @click="switchRecents">关闭</span></div>
+			<div class="content">
+				<ul>
+					<li v-for="(item,i) of footsteps" :key="i">
+						<div v-section="item.section">
+							{{i+1}}. <span class="title">{{item.stitle}}</span> 
+							<span class="createdAt"><i>{{item.time | dateTime("MM-DD HH:mm:SS")}}</i></span>
+						</div>
+						<p class="summary" v-book="item.book">{{item.btitle}}</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="no-more" v-if="footsteps.length && !loading && !showRecents" @click="switchRecents">最近浏览</div>
 	</div>
 </template>
 
@@ -23,9 +41,18 @@ import * as _ from "lodash";
 export default class Bookshelf extends Vue {
   bookList: any = [];
   bookshelf: any;
+  loading: boolean = false;
+  footsteps: any = [];
+  showRecents: boolean =
+    localStorage.getItem("showRecents") ||
+    typeof localStorage.getItem("showRecents") !== "string"
+      ? true
+      : false;
   async getData() {
+    this.loading = true;
     this.bookshelf = await this.get("dis/me/bookshelf");
     this.bookList = this.bookshelf.books;
+    this.loading = false;
   }
   async remove(item: any, index: number) {
     if (!localStorage.getItem("accessToken")) {
@@ -43,8 +70,13 @@ export default class Bookshelf extends Vue {
       }
     }
   }
+  switchRecents() {
+    this.showRecents = !this.showRecents;
+    localStorage.setItem("showRecents", this.showRecents ? "1" : "");
+  }
   created() {
     this.getData();
+    this.footsteps = JSON.parse(localStorage.getItem("footsteps") || "[]");
   }
 }
 </script>
@@ -70,6 +102,57 @@ export default class Bookshelf extends Vue {
     > div {
       display: table-cell;
       vertical-align: middle;
+    }
+  }
+}
+
+.card {
+  margin: 0.5rem;
+  border: 1px solid $color_border;
+  border-radius: 3px;
+  background-color: #fff;
+  font-size: 0.8rem;
+  > .title {
+    @extend %border-bottom;
+    padding: 0.5rem 0.6rem 0.25rem;
+    color: $color_font_mid;
+  }
+  .content {
+    padding: 0.5rem;
+    li {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      padding: 0.3rem 0;
+      border-bottom: 1px dotted $color_border_light;
+      font-size: 1rem;
+      color: $color_font_light;
+      div {
+        line-height: 1.2rem;
+      }
+      .createdAt {
+        float: right;
+        font-size: 0.8rem;
+        i {
+          color: $color_org;
+        }
+      }
+      .title {
+        font-size: 0.9rem;
+        color: $color_font_std;
+      }
+      .summary {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+        text-indent: 0.5rem;
+        font-size: 0.8rem;
+        margin-top: 0.3rem;
+        line-height: 1.5;
+      }
     }
   }
 }

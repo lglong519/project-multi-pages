@@ -1,7 +1,7 @@
 @import "../../styles/variables.scss";
 
 .home {
-    &>div {
+    .card {
         margin: 0.5rem;
         border: 1px solid $color_border;
         border-radius: 3px;

@@ -41,7 +41,7 @@
 				<div class="btn-group">
 					<button type="button" :class="{disabled:currentPage <= 0}" @click="prev">上一页</button>
 					<select name="l" v-if='pages>0' @change="selectPage" v-model="selectedIndex">
-						<option v-for="(item,i) of options" :key="i" :value="i" :selected="currentPage==i" >第{{(i+1)*10-9}} - {{(i+1)*10}}章</option>
+						<option v-for="(item,i) of options" :key="i" :value="i" :selected="currentPage==i" >第{{i*pageSize+1}} - {{(i+1)*pageSize}}章</option>
 					</select>
 					<button type="button" :class="{disabled:currentPage >=pages-1}" @click="next">下一页</button>
 				</div>
@@ -68,6 +68,7 @@ export default class Sections extends Vue {
   count: number = 0;
   pages: number = 0;
   currentPage: number = 0;
+  pageSize: number = 20;
   selectedIndex: number = 0;
   loading: boolean = false;
   @Watch("currentPage")
@@ -95,6 +96,7 @@ export default class Sections extends Vue {
     this.loading = true;
     let res = await this.query("books/" + this._route.query.bid + "/sections", {
       p: this.currentPage,
+      pageSize: this.pageSize,
     });
     this.loading = false;
     this.count = res.headers["x-total-count"];

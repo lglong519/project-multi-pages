@@ -59,12 +59,33 @@ export default class Sections extends Vue {
       return location.replace("/404?url=" + location.href);
     }
   }
-  created() {
+  async created() {
     this.$route.path = "contents.html";
     if (this.$route.query.sid) {
       this.vshow = true;
-      this.getSection();
+      await this.getSection();
+      this.applyRecents();
     }
+  }
+  applyRecents() {
+    let footsteps = JSON.parse(localStorage.getItem("footsteps") || "[]");
+    if (
+      footsteps.length &&
+      footsteps[0].section == this.section.id &&
+      Date.now() - footsteps[0].time < 60000
+    ) {
+      footsteps[0].time = Date.now();
+    } else {
+      footsteps.unshift({
+        section: this.section.id,
+        book: this.section.book,
+        btitle: this.section.btitle,
+        stitle: this.section.title,
+        time: Date.now(),
+      });
+      footsteps.splice(20);
+    }
+    localStorage.setItem("footsteps", JSON.stringify(footsteps));
   }
   setFontSize(size: string) {
     if (typeof size == "string" && size) {

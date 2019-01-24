@@ -7,7 +7,7 @@
 			</div>
 			<div class="row">
 				<label for="password"><i class="clr-red">* </i>密码</label>
-				<input @keyup.enter="corfirm" type="password" v-model="formData.password" placeholder="请输入密码">
+				<input @keyup.enter="corfirm" type="password" name="password" v-model="formData.password" placeholder="请输入密码">
 			</div>
 			<div class="row btns">
 				<button type="button" @click="corfirm">确定登录</button>

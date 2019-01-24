@@ -44,6 +44,20 @@ p {
 		animation: 1s spanning linear infinite normal;
 	}
 }
+.float-right{
+	float: right;
+}
+.float-left{
+	float: left;
+}
+button.disabled {
+	cursor: not-allowed;
+	background-color: #ecf5ff;
+	color: $color_font_light;
+	&:focus {
+		outline: 0;
+	}
+}
 @keyframes spanning{
     0%{
            transform: rotate(0);
