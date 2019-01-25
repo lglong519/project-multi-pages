@@ -50,9 +50,19 @@ export default class Bookshelf extends Vue {
       : false;
   async getData() {
     this.loading = true;
-    this.bookshelf = await this.get("dis/me/bookshelf");
-    this.bookList = this.bookshelf.books;
-    this.loading = false;
+    if (!localStorage.getItem("accessToken")) {
+      alert("未登录");
+      return (location.href = "/user/signin.html");
+    }
+    try {
+      this.bookshelf = await this.get("dis/me/bookshelf");
+      this.bookList = this.bookshelf.books;
+      this.loading = false;
+    } catch (e) {
+      if (_.get(e, "response.status") === 401) {
+        location.href = "/user/signin.html";
+      }
+    }
   }
   async remove(item: any, index: number) {
     if (!localStorage.getItem("accessToken")) {
@@ -76,7 +86,9 @@ export default class Bookshelf extends Vue {
   }
   created() {
     this.getData();
-    this.footsteps = JSON.parse(localStorage.getItem("footsteps") || "[]");
+    this.footsteps = JSON.parse(
+      localStorage.getItem("footsteps") || "[]"
+    ).slice(0, 20);
   }
 }
 </script>

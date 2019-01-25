@@ -43,7 +43,7 @@
 		</header>
 		<div class="search" :style="searchVisible?'height: 2.3rem;':'height: 0;'">
 			<button @click="switchSearchType">{{searchType}}</button>
-			<input type="text" v-model="searchValue" placeholder="输入搜索词"/>
+			<input type="text" v-model.trim="searchValue" placeholder="输入搜索词"/>
 			<button class="search-btn" @click="search"><i class="fa fa-search"></i></button>
 		</div>
 		<nav v-if="showNav">
@@ -97,8 +97,7 @@ export default class AppHeader extends Vue {
     );
   }
   search() {
-    let value = this.searchValue.trim();
-    this.bus.$emit("search", value);
+    this.bus.$emit("search", this.searchValue);
   }
   logout() {
     if (confirm(`确定要退出登录?`)) {

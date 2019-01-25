@@ -83,7 +83,7 @@ export default class Sections extends Vue {
         stitle: this.section.title,
         time: Date.now(),
       });
-      footsteps.splice(20);
+      footsteps.splice(100);
     }
     localStorage.setItem("footsteps", JSON.stringify(footsteps));
   }

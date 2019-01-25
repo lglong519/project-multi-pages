@@ -60,7 +60,9 @@ service.interceptors.response.use(
       _.get(error, "response.data.message") ||
       _.get(error, "response.data.errors.type.message") ||
       error.message;
-    alert(message);
+    if (message !== "Request aborted") {
+      alert(message);
+    }
     return Promise.reject(error);
   }
 );

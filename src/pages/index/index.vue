@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-	<div class="no-more" v-if="loading"><i class="fa fa-spinner"></i> 正在加载...</div>
 	<card-list title="搜索结果" :list="searchData" v-if="searchValue"></card-list>
     <div class="card recommend" v-if="hotData.length && !searchValue">
 		<div class="title">本站推荐</div>
@@ -32,6 +31,7 @@
 			</ul>
 		</div>
 	</div>
+	<div class="no-more" v-if="loading"><i class="fa fa-spinner"></i> 正在加载...</div>
   </div>
 </template>
 
