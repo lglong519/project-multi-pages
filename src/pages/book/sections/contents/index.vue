@@ -1,5 +1,6 @@
 <template>
-	<div id="app" :class="{off:light=='off'}" v-if="vshow">
+	<div id="app" :class="{off:light=='off'}">
+		<div class="no-more" v-if="loading"><i class="fa fa-spinner"></i> 正在加载...</div>
 		<layout :title="title" v-if="section.title">
 			<div class="app-main">
 				<div class="btn-settings">
@@ -42,7 +43,7 @@ import Vue from "@/types";
   },
 })
 export default class Sections extends Vue {
-  vshow: boolean = false;
+  loading: boolean = true;
   section: any = {};
   fontSize: string = localStorage.getItem("fontSize") || "";
   light: string = localStorage.getItem("light") || "on";
@@ -62,30 +63,18 @@ export default class Sections extends Vue {
   async created() {
     this.$route.path = "contents.html";
     if (this.$route.query.sid) {
-      this.vshow = true;
       await this.getSection();
-      this.applyRecents();
+      this.loading = false;
+      this.footsteps();
     }
   }
-  applyRecents() {
-    let footsteps = JSON.parse(localStorage.getItem("footsteps") || "[]");
-    if (
-      footsteps.length &&
-      footsteps[0].section == this.section.id &&
-      Date.now() - footsteps[0].time < 60000
-    ) {
-      footsteps[0].time = Date.now();
-    } else {
-      footsteps.unshift({
-        section: this.section.id,
-        book: this.section.book,
-        btitle: this.section.btitle,
-        stitle: this.section.title,
-        time: Date.now(),
-      });
-      footsteps.splice(100);
-    }
-    localStorage.setItem("footsteps", JSON.stringify(footsteps));
+  footsteps() {
+    this.post("dis/footsteps/section", {
+      section: this.section.id,
+      book: this.section.book,
+      btitle: this.section.btitle,
+      stitle: this.section.title,
+    });
   }
   setFontSize(size: string) {
     if (typeof size == "string" && size) {
@@ -118,6 +107,11 @@ export default class Sections extends Vue {
 #app {
   .disabled {
     cursor: not-allowed;
+  }
+  min-height: 100vh;
+  &::before {
+    content: "";
+    display: table;
   }
 }
 .app-main {

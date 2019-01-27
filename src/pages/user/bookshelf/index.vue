@@ -19,16 +19,16 @@
 			<div class="content">
 				<ul>
 					<li v-for="(item,i) of footsteps" :key="i">
-						<div v-section="item.section">
-							{{i+1}}. <span class="title">{{item.stitle}}</span> 
-							<span class="createdAt"><i>{{item.time | dateTime("MM-DD HH:mm:SS")}}</i></span>
+						<div v-section="item.data.section">
+							{{i+1}}. <span class="title">{{item.data.stitle}}</span> 
+							<span class="createdAt"><i>{{item.createdAt | dateTime("MM-DD HH:mm:SS")}}</i></span>
 						</div>
-						<p class="summary" v-book="item.book">{{item.btitle}}</p>
+						<p class="summary" v-book="item.data.book">{{item.data.btitle}}</p>
 					</li>
 				</ul>
 			</div>
 		</div>
-		<div class="no-more" v-if="footsteps.length && !loading && !showRecents" @click="switchRecents">最近浏览</div>
+		<div class="no-more" v-if="!loading && !footsteps.length" @click="switchRecents">最近浏览</div>
 	</div>
 </template>
 
@@ -83,12 +83,18 @@ export default class Bookshelf extends Vue {
   switchRecents() {
     this.showRecents = !this.showRecents;
     localStorage.setItem("showRecents", this.showRecents ? "1" : "");
+    this.getFootsteps();
+  }
+  async getFootsteps() {
+    if (!this.showRecents) {
+      this.footsteps = [];
+      return;
+    }
+    this.footsteps = await this.get("dis/me/footsteps/section");
   }
   created() {
     this.getData();
-    this.footsteps = JSON.parse(
-      localStorage.getItem("footsteps") || "[]"
-    ).slice(0, 20);
+    this.getFootsteps();
   }
 }
 </script>

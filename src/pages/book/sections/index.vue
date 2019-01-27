@@ -16,7 +16,7 @@
 					</div>
 				</div>
 				<div class="btn-group">
-					<button type="button" v-section="book.firstSection">开始阅读</button>
+					<button type="button" v-section="book.fid">开始阅读</button>
 					<button type="button" @click="addToBookshelf">加入书架</button>
 				</div>
 				<div class="tab">
@@ -113,6 +113,13 @@ export default class Sections extends Vue {
       return location.replace("/404?url=" + location.href);
     }
   }
+  footsteps() {
+    this.post("dis/footsteps/book", {
+      id: this.book.id,
+      author: this.book.author,
+      title: this.book.title,
+    });
+  }
   async created() {
     this._route.path = "sections";
     if (this._route.query.bid) {
@@ -124,6 +131,7 @@ export default class Sections extends Vue {
     await this.getSections();
     await this.getBook();
     this.getRecent();
+    this.footsteps();
   }
   async addToBookshelf() {
     if (localStorage.getItem("accessToken")) {

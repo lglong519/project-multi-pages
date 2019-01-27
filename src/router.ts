@@ -18,22 +18,22 @@ export default new Router({
     },
     {
       path: "/index",
-      name: "home",
       component: Layout,
       children: [
         {
           path: "",
+          name: "home",
           component: () => import("./pages/index/index.vue"),
         },
       ],
     },
     {
       path: "/404",
-      name: "404",
       component: Layout,
       children: [
         {
           path: "",
+          name: "404",
           component: () => import("./pages/index/404.vue"),
         },
       ],
