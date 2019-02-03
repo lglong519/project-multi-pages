@@ -7,7 +7,7 @@ export default {
   SESSION_EXPIRE_TIME: 1800000,
   REQUST: {
     localhost: {
-      BASE_URL: "http://192.168.244.121:51202/",
+      BASE_URL: "http://127.0.0.1:51202/",
     },
     development: {
       BASE_URL: "http://dev.mofunc.com/ws/",

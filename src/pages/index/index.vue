@@ -24,7 +24,7 @@
 					<div v-book="item.id">
 						{{i+1}}.<span class="title">{{item.title}}</span> - 
 						<span class="author">{{item.author}}</span>
-						<span class="createdAt"><i>{{item.updatedAt | dateTime("MM-DD HH:mm")}}</i></span>
+						<span class="createdAt"><i>{{item.updateDate | dateTime("MM-DD HH:mm")}}</i></span>
 					</div>
 					<p class="summary">{{item.info}}</p>
 				</li>
@@ -57,13 +57,13 @@ export default class Home extends Vue {
     this.hotData = await this.get("books/");
   }
   async getRecent() {
-    this.newData = await this.get("books/?sort=-updatedAt");
+    this.newData = await this.get("books/?sort=-updateDate");
   }
   async searchBooks() {
     if (!this.searchValue) {
       return;
     }
-    this.searchData = await this.get("books/?sort=-updatedAt", {
+    this.searchData = await this.get("books/?sort=-updateDate", {
       like: {
         [this.searchType]: this.searchValue,
       },
