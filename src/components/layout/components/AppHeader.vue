@@ -6,7 +6,10 @@
 					<a v-to="'/user/bookshelf.html'"><i class="fa fa-user"></i></a>
 				</span>
 				<span class="title">{{title}}</span>
-				<span class="icon right" @click="searchVisible=!searchVisible"><i class="fa fa-search"></i></span>
+				<span class="icon right" @click="toggleSearch">
+					<i v-if="searchVisible" class="fa fa-close"></i>
+					<i v-else class="fa fa-search"></i>
+				</span>
 			</template>
 			<template v-if="headerType=='main'">
 				<span class="icon left">
@@ -88,6 +91,12 @@ export default class AppHeader extends Vue {
       return false;
     }
     return true;
+  }
+  toggleSearch() {
+    this.searchVisible = !this.searchVisible;
+    if (!this.searchVisible) {
+      this.bus.$emit("search", "");
+    }
   }
   switchSearchType() {
     this.searchType = "作者书名".replace(this.searchType, "");

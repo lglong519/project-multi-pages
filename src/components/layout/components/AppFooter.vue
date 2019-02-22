@@ -22,7 +22,7 @@ import QRCode from "qrcodejs2";
 @Component
 export default class Sections extends Vue {
   QRCode: boolean = false;
-  app: string = "http://yun.mofunc.com/gallery/app/com.book.android_1_0.apk";
+  app: string = "http://yun.mofunc.com/gallery/app/com.book.android_latest.apk";
   qrcode() {
     let qrcode = new QRCode("qrcode", {
       width: 128,
